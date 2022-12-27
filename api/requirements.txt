@@ -1,0 +1,14 @@
+asgiref==3.6.0
+Django==4.1.4
+django-stubs==1.13.1
+django-stubs-ext==0.7.0
+djangorestframework==3.14.0
+mypy==0.991
+mypy-extensions==0.4.3
+psycopg2-binary==2.9.5
+pytz==2022.7
+sqlparse==0.4.3
+tomli==2.0.1
+types-pytz==2022.7.0.0
+types-PyYAML==6.0.12.2
+typing_extensions==4.4.0

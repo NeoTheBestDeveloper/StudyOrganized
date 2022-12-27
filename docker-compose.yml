@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    env_file:
+      - ./.env/database.env
+    volumes:
+      - postgres_data:/var/lib/posgresql/data
+  api:
+    depends_on:
+      - postgres
+    env_file:
+      - ./.env/api.env
+    build: 
+      dockerfile: Dockerfile
+      context: ./api
+    volumes:
+      - ./api:/app
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - ./client:/app
+  nginx:
+    depends_on:
+      - api
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 80:80
+
+
+volumes:
+  postgres_data:
