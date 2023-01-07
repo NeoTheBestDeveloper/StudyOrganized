@@ -1,5 +1,6 @@
 asgiref==3.6.0
 Django==4.1.4
+django-cors-headers==3.13.0
 django-stubs==1.13.1
 django-stubs-ext==0.7.0
 djangorestframework==3.14.0
