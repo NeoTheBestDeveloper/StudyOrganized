@@ -1,0 +1,28 @@
+.theme_add {
+    position: absolute;
+    border: 3px solid #5e81ac;
+    border-radius: 10px;
+    width: 50%;
+    background-color: #eceff4;
+    padding: 20px;
+    left: 25%;
+    top: 20%;
+}
+
+.theme_add__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.short_description {
+    margin-bottom: 20px;
+}
+
+.full_description {
+    margin-bottom: 20px;
+}
+

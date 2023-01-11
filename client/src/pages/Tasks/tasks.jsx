@@ -1,8 +1,13 @@
+import Navbar from '../../components/Navbar';
 import s from './tasks.module.css';
 
 function Tasks() {
+
     return (
-        <h1>Tasks</h1>
+        <div className="tasks">
+            <Navbar />
+            <h1>Tasks</h1>
+        </div>
     );
 }
 

@@ -1,0 +1,32 @@
+.register, .login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
+.register_form, .login_form {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid #5e81ac;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.form_input {
+    margin-bottom: 10px;
+}
+
+.form_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.error {
+    color: #bf616a;
+    margin-bottom: 10px;
+}
+

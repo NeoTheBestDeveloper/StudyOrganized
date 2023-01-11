@@ -1,8 +1,12 @@
+import Navbar from '../../components/Navbar';
 import s from './resource.module.css';
 
 function Resource() {
     return (
-        <h1>Resource</h1>
+        <div className="resource">
+            <Navbar />
+            <h1>Resource</h1>
+        </div>
     );
 }
 

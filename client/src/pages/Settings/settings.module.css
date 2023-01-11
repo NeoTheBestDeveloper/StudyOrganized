@@ -1,0 +1,27 @@
+.settings {
+    height: 100%;
+}
+
+.settings ul{
+    list-style: none;
+}
+
+.saved_themes {
+    margin-bottom: 20px;
+}
+
+.saved_themes__title {
+    margin-bottom: 10px;
+}
+
+.shown_themes__title {
+    margin-bottom: 10px;
+}
+
+.saved_themes__list {
+    margin-bottom: 20px;
+}
+
+.shown_themes__list {
+    margin-bottom: 20px;
+}

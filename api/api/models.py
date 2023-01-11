@@ -4,7 +4,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 __all__ = [
-    'User',
+    'ExtentedUser',
     'Theme',
     'Resource',
     'Goal',
@@ -15,17 +15,21 @@ __all__ = [
 ]
 
 
-class User(AbstractUser):
+class ExtentedUser(AbstractUser):
     name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255, unique=True)
-    password_hash = models.CharField(max_length=255)
+    email = models.EmailField(('email address'), unique=True)
+    password = models.CharField(max_length=255)
     create_date = models.DateTimeField(auto_now_add=True)
-    avatar_url = models.CharField(max_length=255)
-    settings = models.JSONField()
+    avatar_url = models.CharField(max_length=255, blank=True, null=True)
+    settings = models.JSONField(blank=True, null=True)
+    username = None
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
 
 
 class Theme(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     short_description = models.TextField()
@@ -33,7 +37,7 @@ class Theme(models.Model):
 
 
 class Resource(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -42,7 +46,7 @@ class Resource(models.Model):
 
 
 class Goal(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     task_id = models.PositiveIntegerField()
     task_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -53,7 +57,7 @@ class Goal(models.Model):
 
 
 class Task(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description_text = models.TextField()
@@ -63,7 +67,7 @@ class Task(models.Model):
 
 
 class FlashCard(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     front = models.TextField()
@@ -73,14 +77,14 @@ class FlashCard(models.Model):
 
 
 class Test(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     decription = models.TextField()
 
 
 class Question(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ExtentedUser, on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
     answers = models.JSONField()
     right_answer = models.PositiveSmallIntegerField()

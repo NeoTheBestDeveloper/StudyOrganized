@@ -1,0 +1,22 @@
+img {
+    width: 64px;
+    height: 64;
+}
+
+.navbar_items {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
+
+.right {
+    display: flex;
+}
+
+.navbar_item {
+    margin-right: 20px;
+}
+
+.navbar_item__main {
+    font-size: 50px;
+}

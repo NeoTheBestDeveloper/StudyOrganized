@@ -1,8 +1,12 @@
+import Navbar from '../../components/Navbar';
 import s from './profile.module.css';
 
 function Profile() {
     return (
-        <h1>Profile</h1>
+        <div className="profile">
+            <Navbar />
+            <h1>Profile</h1>
+        </div>
     );
 }
 
