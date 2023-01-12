@@ -28,6 +28,10 @@ button {
     padding: 5px;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 input {
     font-size: 15px;
     background-color: transparent;

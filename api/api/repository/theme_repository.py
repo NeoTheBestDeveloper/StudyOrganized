@@ -1,3 +1,4 @@
+from enum import Enum
 from django.db.models.manager import BaseManager
 
 from ..serializers import ThemeSerializer
@@ -22,4 +23,12 @@ class ThemeRepository:
         theme = self.model_manager.filter(id=theme_id).first()
         serializer = ThemeSerializer(theme)
         payload = {'theme': serializer.data, 'status': 'ok'}
+        return payload
+
+    def filter_themes(self, title: str) -> dict:
+        themes_objs = self.model_manager.filter(title__icontains=title)
+        payload = {'themes': [], 'status': 'ok'}
+        serializer = ThemeSerializer(themes_objs, many=True)
+        payload['themes'] = serializer.data
+
         return payload

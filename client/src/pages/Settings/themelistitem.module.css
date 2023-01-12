@@ -1,11 +1,14 @@
+.theme_item {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
 .theme_item::before {
   content: "- ";
 }
 
-
-.theme_item {
-    font-size: 30px;
-    margin-bottom: 5px;
+.theme_item:hover {
+    cursor: pointer;
 }
 
 .theme_title {

@@ -66,3 +66,7 @@ export const addResourceAPI = async (theme_id, title, short_description, full_de
         { headers: { Authorization: `Token ${token}` } }
     )
 }
+
+export const filterThemesAPI = async (title) => {
+    return await client.get(`/themes/?title=${title}`);
+}

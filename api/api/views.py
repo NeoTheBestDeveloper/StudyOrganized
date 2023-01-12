@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from rest_framework.views import APIView, Request, Response
 
 from .service import ResourceService, ThemeService
@@ -11,7 +12,13 @@ OK_STATUS: str = 'ok'
 class ThemesAPIView(APIView):
 
     def get(self, request: Request) -> Response:
-        payload = ThemeRepository(Theme.objects).get_themes(request.user)
+        repository = ThemeRepository(Theme.objects)
+
+        if not isinstance(request.user, AnonymousUser):
+            payload = repository.get_themes(request.user)
+        else:
+            payload = repository.filter_themes(request.GET['title'])
+
         return Response(payload)
 
 
