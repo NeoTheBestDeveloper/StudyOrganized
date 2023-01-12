@@ -1,0 +1,18 @@
+.profile_name {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.profile_email {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.logout_btn {
+    color: #bf616a;
+    border-color: #bf616a;
+}
+
+.bold {
+    font-weight: bold;
+}

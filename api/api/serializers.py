@@ -1,17 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import *
-
-__all__ = [
-    'UserSerializer',
-    'ThemeSerializer',
-    'ResourceSerializer',
-    'GoalSerializer',
-    'TaskSerializer',
-    'FlashCardSerializer',
-    'TestSerializer',
-    'QuestionSerializer',
-]
+from .models import ExtentedUser, Theme, Resource, \
+    Task, Goal, Test, Question, FlashCard
 
 
 class ExtentedUSerializer(ModelSerializer):
@@ -39,13 +29,14 @@ class ThemeSerializer(ModelSerializer):
 
     class Meta:
         model = Theme
-        fields = '__all__'
+        fields = 'id', 'title', 'full_description', 'short_description'
 
 
 class ResourceSerializer(ModelSerializer):
 
     class Meta:
         model = Resource
+        fields = 'id', 'title', 'full_description', 'short_description'
 
 
 class GoalSerializer(ModelSerializer):

@@ -1,0 +1,24 @@
+.resource_title {
+    margin-bottom: 10px;
+}
+
+.short_description {
+    margin-bottom: 20px;
+}
+
+.short_description__text {
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.full_description {
+    margin-bottom: 20px;
+}
+
+.full_description__text {
+    margin-bottom: 10px;
+}
+
+.full_description__title {
+    margin-bottom: 10px;
+}

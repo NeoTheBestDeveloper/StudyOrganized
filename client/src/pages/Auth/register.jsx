@@ -32,7 +32,7 @@ function Register() {
             : <main className={s.register}>
                 <form className={s.register_form} onSubmit={submit}>
                     <input value={name} placeholder='Имя' id="Name" type="username" className={s.form_input}
-                        onChange={e => setName(e.target.value)} required />
+                        onChange={e => setName(e.target.value)} required autoFocus />
                     <input value={email} placeholder='Почта' id="Email" type="email" className={s.form_input}
                         onChange={e => setEmail(e.target.value)} required />
                     <input value={password} placeholder='Пароль' id="Password" type="password" className={s.form_input}

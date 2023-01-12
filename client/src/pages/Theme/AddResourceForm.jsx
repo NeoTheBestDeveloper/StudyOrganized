@@ -1,34 +1,34 @@
 import { useState } from 'react';
-import { addThemeAPI } from '../../api/api';
+import { addResourceAPI } from '../../api/api';
 
-import s from './theme_add_form.module.css'
+import s from './theme.module.css';
 
-function ThemeAddForm(props) {
-    const [themeTitle, setThemeTitle] = useState('');
+function ResourceAddForm(props) {
+    const [resourceTitle, setResourceTitle] = useState('');
     const [shortDescr, setShortDescr] = useState('');
     const [fullDescr, setFullDescr] = useState('');
 
-    const addTheme = async (e) => {
+    const addResource = async (e) => {
         e.preventDefault();
-        await addThemeAPI(themeTitle, shortDescr, fullDescr).then((res) => {
+        await addResourceAPI(props.themeId, resourceTitle, shortDescr, fullDescr).then((res) => {
             props.setShowForm(false);
-            props.setSavedThemes([...props.savedThemes, res.data['theme']]);
+            props.setResources([...props.resources, res.data['resource']]);
         });
     }
 
     return (
-        <div className={s.theme_add}>
-            <form className={s.theme_add__form}>
+        <div className={s.resource_add}>
+            <form className={s.resource_add__form}>
                 <input placeholder='Название' type="text" className={s.title}
-                    value={themeTitle} onChange={e => setThemeTitle(e.target.value)} required />
+                    value={resourceTitle} onChange={e => setResourceTitle(e.target.value)} required />
                 <textarea placeholder='Короткое описание' type="text" className={s.short_description}
                     value={shortDescr} onChange={e => setShortDescr(e.target.value)} />
                 <textarea placeholder='Полное описание' type="text" className={s.full_description}
                     value={fullDescr} onChange={e => setFullDescr(e.target.value)} />
-                <button type='submit' className={s.add_theme_btn} onClick={e => addTheme(e)}>Сохранить</button>
+                <button type='submit' className={s.add_resource_btn} onClick={e => addResource(e)}>Сохранить</button>
             </form>
         </div>
     );
 }
 
-export default ThemeAddForm;
+export default ResourceAddForm;

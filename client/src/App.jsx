@@ -32,7 +32,6 @@ function App() {
                     })
                     .catch(e => {
                         setIsAuth(false);
-                        console.log(e.response);
                     });
             }
 
@@ -46,7 +45,7 @@ function App() {
 
     return (
         <AuthContext.Provider value={{
-            isAuth, setIsAuth, user,
+            isAuth, setIsAuth, user, setUser,
         }}>
             <div className={s.wrapper}>
                 <Routes>

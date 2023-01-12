@@ -1,24 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+import { getThemesAPI } from '../../api/api';
 import Navbar from '../../components/Navbar';
-import s from './settings.module.css';
 import ThemeListItem from './ThemeListItem';
 import ThemeAddForm from './ThemeAddForm';
-import { getThemesAPI } from '../../api/api';
+
+import s from './settings.module.css';
 
 function Settings() {
+    const effectRan = useRef(false);
     const [savedThemes, setSavedThemes] = useState([]);
     const [shownThemes, setShownThemes] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
-        const fetchThemes = async () => {
-            let themes = await getThemesAPI();
-            setSavedThemes([...savedThemes, ...themes['themes']]);
+        if (!effectRan.current) {
+            const getThemes = async () => {
+                await getThemesAPI().then((res) => {
+                    setSavedThemes([...savedThemes, ...res.data['themes']]);
+                });
+            }
+            getThemes();
         }
-        fetchThemes();
-    }, []
-    );
+
+        return () => {
+            effectRan.current = true;
+        }
+    }, []);
 
     const showAddThemeForm = () => {
         setShowForm(!showForm);
@@ -27,10 +35,10 @@ function Settings() {
     return (
         <div className={s.settings}>
             <Navbar />
-            {showForm
-                ? <ThemeAddForm setShowForm={setShowForm} setSavedThemes={setSavedThemes}
+            {showForm &&
+                <ThemeAddForm setShowForm={setShowForm} setSavedThemes={setSavedThemes}
                     savedThemes={savedThemes} />
-                : <div></div>}
+            }
             <div className={s.saved_themes}>
                 <h1 className={s.saved_themes__title}>Сохраненные темы</h1>
                 <ul className={s.saved_themes__list}>
