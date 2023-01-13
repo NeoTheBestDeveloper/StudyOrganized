@@ -67,6 +67,6 @@ export const addResourceAPI = async (theme_id, title, short_description, full_de
     )
 }
 
-export const filterThemesAPI = async (title) => {
-    return await client.get(`/themes/?title=${title}`);
+export const filterThemesAPI = async (title, batch_num) => {
+    return await client.get(`/themes/?title=${title}&batch_num=${batch_num}`);
 }
