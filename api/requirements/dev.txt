@@ -1,0 +1,4 @@
+-r base.txt
+pytest==7.2.0
+mypy==0.991
+sqlalchemy-stubs==0.4

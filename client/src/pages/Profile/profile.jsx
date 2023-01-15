@@ -10,9 +10,7 @@ function Profile() {
 
     const logout = async () => {
         logoutAPI().then(res => {
-            if (res.status === 204) {
-                window.location.reload();
-            }
+            window.location.reload();
         });
     }
 

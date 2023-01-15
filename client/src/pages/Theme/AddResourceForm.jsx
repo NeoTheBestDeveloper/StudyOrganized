@@ -12,7 +12,7 @@ function ResourceAddForm(props) {
         e.preventDefault();
         await addResourceAPI(props.themeId, resourceTitle, shortDescr, fullDescr).then((res) => {
             props.setShowForm(false);
-            props.setResources([...props.resources, res.data['resource']]);
+            props.setResources([...props.resources, res.data]);
         });
     }
 

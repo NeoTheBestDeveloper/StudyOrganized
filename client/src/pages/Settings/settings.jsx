@@ -17,7 +17,7 @@ function Settings() {
         if (!effectRan.current) {
             const getThemes = async () => {
                 await getThemesAPI().then((res) => {
-                    setSavedThemes([...savedThemes, ...res.data['themes']]);
+                    setSavedThemes([...savedThemes, ...res.data]);
                 });
             }
             getThemes();

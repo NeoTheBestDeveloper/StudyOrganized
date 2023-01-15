@@ -20,13 +20,13 @@ function Theme() {
         if (!effectRan.current) {
             const getTheme = async () => {
                 await getThemeAPI(location.state.themeId).then((res) => {
-                    setTheme(res.data['theme']);
+                    setTheme(res.data);
                 });
             }
 
             const getResources = async () => {
                 await getResourcesAPI(location.state.themeId).then((res) => {
-                    setResources([...resources, ...res.data['resources']]);
+                    setResources([...resources, ...res.data]);
                 });
             }
 

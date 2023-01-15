@@ -12,7 +12,7 @@ function ThemeAddForm(props) {
         e.preventDefault();
         await addThemeAPI(themeTitle, shortDescr, fullDescr).then((res) => {
             props.setShowForm(false);
-            props.setSavedThemes([...props.savedThemes, res.data['theme']]);
+            props.setSavedThemes([...props.savedThemes, res.data]);
         });
     }
 

@@ -13,7 +13,7 @@ function Search() {
     const getFilteredThemes = async () => {
         await filterThemesAPI(searchValue).then((res) => {
             setSearchValue('');
-            setThemes(res.data['themes']);
+            setThemes(res.data);
         });
     }
 

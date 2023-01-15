@@ -14,7 +14,7 @@ function Resource() {
         if (!effectRan.current) {
             const getResource = async () => {
                 await getResourceAPI(location.state.resourceId).then((res) => {
-                    setResource(res.data['resource']);
+                    setResource(res.data);
                 });
             }
 
