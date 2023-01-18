@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { resourceApi } from '../../api/Resources';
 
 import Navbar from '../../components/Navbar/Navbar';
+import ResourceContent from './ResourceContent';
 
 import s from './Resource.module.css';
 
@@ -12,14 +13,8 @@ function Resource() {
     return (
         <main className={s.resource}>
             <Navbar />
-            {!isLoading &&
-                <div className={s.resource_content}>
-                    <input className={s.resource_title} value={data.title} />
-                    <div className={s.short_description}>
-                        <input className={s.short_description__text} value={data.description} />
-                    </div>
-                </div>
-            }
+            {!isLoading && <ResourceContent title={data.title} description={data.description}
+                id={data.id} theme_id={data.theme_id} />}
         </main>
     );
 }

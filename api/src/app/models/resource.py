@@ -12,3 +12,6 @@ class Resource(Base):
     theme_id = Column(Integer,
                       ForeignKey('themes.id', ondelete='cascade'),
                       nullable=False)
+    user_id = Column(Integer,
+                     ForeignKey('users.id', ondelete='cascade'),
+                     nullable=False)

@@ -88,7 +88,6 @@ async def update_theme(theme_id: int,
     query = update(Theme).values(
         title=new_theme.title,
         description=new_theme.description).where(Theme.id == theme_id)
-    print(query)
     await session.execute(query)
     await session.commit()
     return {}

@@ -17,6 +17,12 @@ function Theme() {
     const resourcesStatus = resourceApi.useFetchThemeResourcesQuery(location.state.themeId);
     const [createResource] = resourceApi.useCreateResourceMutation();
 
+    const [deleteResourceAPI] = resourceApi.useDeleteResourceMutation();
+
+    const deleteResource = async (resourceId) => {
+        const { data, error } = await deleteResourceAPI(resourceId);
+    }
+
     const addArticle = async (title, description) => {
         await createResource({ theme_id: location.state.themeId, title, description });
     }
@@ -38,7 +44,7 @@ function Theme() {
                     <h2 className={s.resources_title}>Ресурсы</h2>
                     <ul className={s.resources_list}>
                         {resourcesStatus.data.map(
-                            (item) => <ResourceItem title={item.title} id={item.id} key={item.id} />
+                            (item) => <ResourceItem title={item.title} id={item.id} key={item.id} deleteResource={deleteResource} />
                         )}
                     </ul>
                     <button className={s.resources_add__btn} onClick={() => setIsFormShown(!isFormShown)}>

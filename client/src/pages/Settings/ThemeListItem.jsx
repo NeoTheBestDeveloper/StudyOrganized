@@ -13,7 +13,6 @@ function ThemeListItem(props) {
         });
     }
 
-    console.log(props);
     return (
         <li className={s.theme_item}>
             <button className={s.theme_title} onClick={goToTheme}>{props.title}</button>
