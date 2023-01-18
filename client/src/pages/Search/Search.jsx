@@ -1,20 +1,18 @@
 import { useState } from 'react';
 
-import { filterThemesAPI } from '../../api/api';
+import { themeAPI } from '../../api/Themes';
 
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import ThemeItem from './ThemeItem';
-import s from './search.module.css';
+import s from './Search.module.css';
 
 function Search() {
+    const [trigger, result] = themeAPI.useLazySearchThemesQuery();
     const [searchValue, setSearchValue] = useState('');
-    const [themes, setThemes] = useState([]);
 
     const getFilteredThemes = async () => {
-        await filterThemesAPI(searchValue).then((res) => {
-            setSearchValue('');
-            setThemes(res.data);
-        });
+        await trigger(searchValue);
+        setSearchValue('');
     }
 
     return (
@@ -27,9 +25,11 @@ function Search() {
                     <button className={s.search_btn} onClick={getFilteredThemes}>Поиск</button>
                 </div>
                 <div className={s.search_bottom}>
-                    <ul className={s.search_results}>
-                        {themes.map((item) => <ThemeItem key={item.id} theme={item} />)}
-                    </ul>
+                    {result.currentData &&
+                        <ul className={s.search_results}>
+                            {result.data.map((item) => <ThemeItem key={item.id} theme={item} />)}
+                        </ul>
+                    }
                 </div>
 
             </div>

@@ -1,33 +1,30 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Link } from 'react-router-dom'
+import { authAPI } from '../../api/Auth';
+import authSlice from '../../store/Auth/AuthSlice';
 
-import { getUserAPI, loginAPI } from '../../api/api';
-import AuthContext from '../../context/AuthContext';
 
-import s from './auth.module.css';
+import s from './Auth.module.css';
 
 function Login() {
-    const { isAuth, setIsAuth, setUser } = useContext(AuthContext);
+    const isAuth = useSelector(state => state.auth.isAuth);
+    const dispatch = useDispatch();
+    const [login] = authAPI.useLoginMutation();
 
-    const [wrongInput, setWrongInput] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [redirect, setRedirect] = useState(isAuth);
 
     const submit = async (e) => {
         e.preventDefault();
-        await loginAPI(email, password)
-            .then(() => {
-                setRedirect(true);
-                setIsAuth(true);
-                getUserAPI().then(res => setUser(res.data))
-            })
-            .catch(() => { setWrongInput(true) });
+        const { data, error } = await login({ email, password });
+        if (data) {
+            dispatch(authSlice.actions.authSuccess());
+        } else {
+            console.log(error);
+        }
     }
 
-    if (redirect) {
-        return <Navigate to='/' />
-    }
 
     return (
         isAuth
@@ -38,7 +35,6 @@ function Login() {
                         className={s.form_input} onChange={e => setEmail(e.target.value)} autoFocus required />
                     <input value={password} placeholder='Пароль' id="Password" type="password"
                         className={s.form_input} onChange={e => setPassword(e.target.value)} required />
-                    {wrongInput && <div className={s.error}>Неверный пароль или почта.</div>}
                     <div className={s.form_bottom}>
                         <button type='submit' className={s.auth_btn}>Войти</button>
                         <Link to='/register' className={s.form_bottom__link}>Нет аккаунта? Зарегестрироваться</Link>

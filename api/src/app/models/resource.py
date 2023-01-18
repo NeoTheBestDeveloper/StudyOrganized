@@ -1,13 +1,14 @@
-from sqlalchemy import Column, ForeignKey, String, Integer, Table, Text
+from sqlalchemy import Column, ForeignKey, String, Integer, Text
 
-from src.database import Base
+from ...database import Base
 
-resource = Table(
-    "resource",
-    Base.metadata,
-    Column("id", Integer, primary_key=True),
-    Column("title", String(255), nullable=False),
-    Column("short_description", String(255), nullable=True, default=""),
-    Column("full_description", Text, nullable=True, default=""),
-    Column("theme_id", Integer, ForeignKey('theme.id', ondelete='cascade')),
-)
+
+class Resource(Base):
+    __tablename__ = "resources"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    title = Column(String(255), nullable=False)
+    description = Column(Text, nullable=True)
+    theme_id = Column(Integer,
+                      ForeignKey('themes.id', ondelete='cascade'),
+                      nullable=False)

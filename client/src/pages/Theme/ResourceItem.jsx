@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import s from './theme.module.css';
+import s from './Theme.module.css';
 
 function ResourceItem(props) {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ function ResourceItem(props) {
 
     return (
         <li className={s.resource_item}>
-            <a className={s.resource_title} onClick={gotToResource}>{props.title}</a>
+            <button className={s.resource_title} onClick={gotToResource}>{props.title}</button>
             <button type="button" className={s.cross_button}>
                 <img src="assets/cross.svg" alt="Крестик" />
             </button>

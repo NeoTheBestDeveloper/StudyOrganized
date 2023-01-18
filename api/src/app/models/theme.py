@@ -1,17 +1,19 @@
-from datetime import datetime
-
 from sqlalchemy import TIMESTAMP, Column, ForeignKey, \
-        String, Integer, Table, Text
+        String, Integer, Text
+from sqlalchemy.sql import func
 
 from ...database import Base
 
-theme = Table(
-    'theme',
-    Base.metadata,
-    Column('id', Integer, primary_key=True),
-    Column('title', String(255), nullable=False),
-    Column('short_description', String(255), nullable=True, default=''),
-    Column('full_description', Text, nullable=True, default=''),
-    Column('created_at', TIMESTAMP, default=datetime.utcnow),
-    Column('user_id', Integer, ForeignKey('user.id', ondelete='cascade')),
-)
+
+class Theme(Base):
+    __tablename__ = 'themes'
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    title = Column(String(255), nullable=False)
+    description = Column(Text, nullable=True)
+    created_at = Column(TIMESTAMP(timezone=True),
+                        server_default=func.now(),
+                        nullable=False)
+    user_id = Column(Integer,
+                     ForeignKey('users.id', ondelete='cascade'),
+                     nullable=False)

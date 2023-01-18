@@ -1,53 +1,35 @@
 import { Route, Routes } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react';
 
-import AuthContext from './context/AuthContext';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
+import Main from './pages/Main/Main';
+import Profile from './pages/Profile/Profile';
+import Resource from './pages/Resource/Resource';
+import Search from './pages/Search/Search';
+import Settings from './pages/Settings/Settings';
+import Tasks from './pages/Tasks/Tasks';
+import Theme from './pages/Theme/Theme';
 
-import Login from './pages/Auth/login';
-import Register from './pages/Auth/register';
-import Main from './pages/Main/main';
-import Profile from './pages/Profile/profile';
-import Resource from './pages/Resource/resource';
-import Search from './pages/Search/search';
-import Settings from './pages/Settings/settings';
-import Tasks from './pages/Tasks/tasks';
-import Theme from './pages/Theme/theme';
-
-import s from './app.module.css'
-import PrivateRoute from './components/PrivateRoute';
-import { getUserAPI } from './api/api';
+import s from './App.module.css'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import { authAPI } from './api/Auth';
+import { useDispatch } from 'react-redux';
+import authSlice from './store/Auth/AuthSlice';
+import { useEffect } from 'react';
 
 function App() {
-    const effectRan = useRef(false);
-    const [user, setUser] = useState({});
-    const [isAuth, setIsAuth] = useState(null);
+    const { data, isLoading } = authAPI.useGetMeQuery();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!effectRan.current) {
-            const getUser = async () => {
-                getUserAPI()
-                    .then(res => {
-                        setUser(res.data);
-                        setIsAuth(true);
-                    })
-                    .catch(e => {
-                        setIsAuth(false);
-                    });
-            }
+        if (data)
+            dispatch(authSlice.actions.authUser(data));
+    }, [data, dispatch]);
 
-            getUser();
-        }
-
-        return () => {
-            effectRan.current = true;
-        }
-    }, []);
 
     return (
-        <AuthContext.Provider value={{
-            isAuth, setIsAuth, user, setUser,
-        }}>
-            <div className={s.wrapper}>
+        <div className={s.wrapper}>
+            {!isLoading &&
                 <Routes>
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/register" element={<Register />} />
@@ -60,8 +42,8 @@ function App() {
                     <Route path="/tasks" element={<PrivateRoute><Tasks /></PrivateRoute>} />
                     <Route path="/theme" element={<PrivateRoute><Theme /></PrivateRoute>} />
                 </Routes>
-            </div >
-        </AuthContext.Provider>
+            }
+        </div >
     );
 }
 

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import s from './search.module.css'
+
+import s from './Search.module.css'
 
 const ThemeItem = (props) => {
     const navigate = useNavigate();

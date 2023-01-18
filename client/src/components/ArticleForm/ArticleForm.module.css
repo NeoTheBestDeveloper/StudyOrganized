@@ -1,4 +1,4 @@
-.theme_add {
+.article_form {
     position: absolute;
     border: 3px solid #5e81ac;
     border-radius: 10px;
@@ -9,7 +9,7 @@
     top: 20%;
 }
 
-.theme_add__form {
+.article_form__form {
     display: flex;
     flex-direction: column;
 }
@@ -18,11 +18,6 @@
     margin-bottom: 20px;
 }
 
-.short_description {
+.description {
     margin-bottom: 20px;
 }
-
-.full_description {
-    margin-bottom: 20px;
-}
-

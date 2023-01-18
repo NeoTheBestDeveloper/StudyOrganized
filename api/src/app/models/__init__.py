@@ -1,7 +1,7 @@
-from .resource import resource
-from .theme import theme
+from .resource import Resource
+from .theme import Theme
 
 __all__ = (
-    'resource',
-    'theme',
+    'Resource',
+    'Theme',
 )

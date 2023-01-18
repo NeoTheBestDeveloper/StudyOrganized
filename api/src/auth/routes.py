@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from .config import auth_backend, fastapi_users
+from .auth import auth_backend, fastapi_users
 from .schemas import UserCreateSchema, UserReadSchema
 from .models import User
 
@@ -21,6 +21,6 @@ router.include_router(
 current_user = fastapi_users.current_user()
 
 
-@router.get("/api/users/me", tags=['Api'])
+@router.get("/api/users/me", tags=['Auth'])
 def get_current_user(user: User = Depends(current_user)):
     return UserReadSchema.from_orm(user)

@@ -1,58 +1,45 @@
-from datetime import datetime
-
 from fastapi_users.db import SQLAlchemyBaseUserTable
 from fastapi_users_db_sqlalchemy.access_token import \
         SQLAlchemyBaseAccessTokenTable
 from sqlalchemy import Column, ForeignKey, Integer, String, JSON, TIMESTAMP, \
-        Table, Boolean
-from sqlalchemy.ext.declarative import declared_attr
+        Boolean
+from sqlalchemy.sql import func, text
 
 from ..database import Base, declarative_base
 
 FakeBase = declarative_base()
 
-user = Table(
-    "user",
-    Base.metadata,
-    Column("id", Integer, primary_key=True),
-    Column("email", String(320), nullable=False, unique=True, index=True),
-    Column("name", String(255), nullable=False),
-    Column("registered_at", TIMESTAMP, default=datetime.utcnow,
-           nullable=False),
-    Column("hashed_password", String(1024), nullable=False),
-    Column('settings', JSON, nullable=False),
-    Column("avatar_url", String(255), nullable=True),
-    Column("registered_at", TIMESTAMP, default=datetime.utcnow,
-           nullable=False),
-    Column("is_active", Boolean, default=True, nullable=False),
-    Column("is_superuser", Boolean, default=False, nullable=False),
-    Column("is_verified", Boolean, default=False, nullable=False),
-)
 
+class User(SQLAlchemyBaseUserTable[int], Base):
+    __tablename__ = "users"
 
-class User(SQLAlchemyBaseUserTable[int], FakeBase):
-    __tablename__ = "user"
-
-    id = Column(Integer, primary_key=True)  # type: ignore
+    id = Column(Integer, primary_key=True, nullable=False)  # type: ignore
+    name = Column(String(255), nullable=False)
     email = Column(String(length=320), unique=True, index=True,
                    nullable=False)  # type: ignore
-    name = Column(String(255), nullable=False)
     hashed_password = Column(String(length=1024),
                              nullable=False)  # type: ignore
-    settings = Column(JSON, default='{}', nullable=False)
-    avatar_url = Column(String(255), nullable=True)
-    registered_at = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
-    is_active = Column(Boolean, default=True, nullable=False)  # type: ignore
-    is_superuser = Column(Boolean, default=False,
+    settings = Column(JSON, server_default=text("'{}'::json"), nullable=False)
+    avatar_file_path = Column(String(255), nullable=True)
+    registered_at = Column(TIMESTAMP(timezone=True),
+                           server_default=func.now(),
+                           nullable=False)
+    is_active = Column(Boolean, server_default='true',
+                       nullable=False)  # type: ignore
+    is_superuser = Column(Boolean, server_default='false',
                           nullable=False)  # type: ignore
-    is_verified = Column(Boolean, default=False,
+    is_verified = Column(Boolean, server_default='false',
                          nullable=False)  # type: ignore
 
 
 class AccessToken(SQLAlchemyBaseAccessTokenTable[int], Base):
+    token = Column(String(length=43), primary_key=True)  # type: ignore
+    created_at = Column(
+        TIMESTAMP(timezone=True),  # type: ignore
+        index=True,
+        nullable=False,
+        server_default=func.now())
 
-    @declared_attr
-    def user_id(cls):
-        return Column(Integer,
-                      ForeignKey("user.id", ondelete="cascade"),
-                      nullable=False)
+    user_id = Column(Integer,
+                     ForeignKey("users.id", ondelete="cascade"),
+                     nullable=False)  # type: ignore

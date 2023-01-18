@@ -1,14 +1,14 @@
-import { useContext, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom'
-import { registerAPI } from '../../api/api';
-import AuthContext from '../../context/AuthContext';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { authAPI } from '../../api/Auth';
 
-import s from './auth.module.css';
+import s from './Auth.module.css';
 
 function Register() {
-    const { isAuth } = useContext(AuthContext);
-    const [redirect, setRedirect] = useState(false);
-    const [wrongValue, setWrongValue] = useState(false);
+    const isAuth = useSelector(state => state.auth.isAuth);
+    const navigate = useNavigate();
+    const [register] = authAPI.useRegisterMutation();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -16,15 +16,14 @@ function Register() {
 
     const submit = async (e) => {
         e.preventDefault();
-        await registerAPI(name, email, password)
-            .then(res => setRedirect(true))
-            .catch(e => setWrongValue(true));
+        const { data, error } = await register({ name, email, password });
+        if (data) {
+            navigate('/login');
+        } else if (error) {
+            console.log(error);
+        }
     }
 
-
-    if (redirect) {
-        return <Navigate to='/login' />;
-    }
 
     return (
         isAuth
@@ -37,7 +36,6 @@ function Register() {
                         onChange={e => setEmail(e.target.value)} required />
                     <input value={password} placeholder='Пароль' id="Password" type="password" className={s.form_input}
                         onChange={e => setPassword(e.target.value)} required />
-                    {wrongValue && <div className={s.error}>Пользователь с таким email уже существует.</div>}
                     <div className={s.form_bottom}>
                         <button type='submit' className={s.form_bottom__btn}>Зарегестрироваться</button>
                         <Link to='/login' className={s.form_bottom__link}>Уже есть аккаунт? Войти</Link>

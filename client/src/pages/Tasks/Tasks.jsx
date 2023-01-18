@@ -1,5 +1,5 @@
-import Navbar from '../../components/Navbar';
-import s from './tasks.module.css';
+import Navbar from '../../components/Navbar/Navbar';
+import s from './Tasks.module.css';
 
 function Tasks() {
 

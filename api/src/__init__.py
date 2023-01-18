@@ -1,5 +1,5 @@
 from .config import DB_HOST, DB_PASS, DB_PORT, DB_USER, DB_NAME, DEBUG, \
-        SECRET_KEY
+        SECRET_AUTH_KEY
 
 __all__ = (
     'DB_PORT',
@@ -8,5 +8,5 @@ __all__ = (
     'DB_USER',
     'DB_NAME',
     'DEBUG',
-    'SECRET_KEY',
+    'SECRET_AUTH_KEY',
 )

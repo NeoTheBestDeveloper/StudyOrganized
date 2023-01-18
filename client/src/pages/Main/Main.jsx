@@ -1,6 +1,6 @@
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 
-import s from './main.module.css';
+import s from './Main.module.css';
 
 function Main() {
     return (
