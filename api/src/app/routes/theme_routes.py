@@ -1,7 +1,7 @@
 from enum import Enum
 
 from fastapi import APIRouter, Depends
-from sqlalchemy import insert, select, func
+from sqlalchemy import delete, insert, select, func, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...auth import current_user, User
@@ -67,3 +67,28 @@ async def get_theme(
     query = select(Theme).where(Theme.id == theme_id)
     result = await session.execute(query)
     return result.scalars().first()
+
+
+@themes_router.delete("/themes/{theme_id}")
+async def delete_theme(theme_id: int,
+                       session: AsyncSession = Depends(get_async_session)):
+    # Добавить проверку, что пользователь может удалить эту тему
+    query = delete(Theme).where(Theme.id == theme_id)
+    await session.execute(query)
+    await session.commit()
+    return {}
+
+
+@themes_router.put("/themes/{theme_id}")
+async def update_theme(theme_id: int,
+                       new_theme: ThemeSchema,
+                       user: User = Depends(current_user),
+                       session: AsyncSession = Depends(get_async_session)):
+    # Добавить проверку, что пользователь может обновить эту тему
+    query = update(Theme).values(
+        title=new_theme.title,
+        description=new_theme.description).where(Theme.id == theme_id)
+    print(query)
+    await session.execute(query)
+    await session.commit()
+    return {}

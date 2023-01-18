@@ -1,0 +1,18 @@
+.theme_title {
+    outline: none;
+    border: none;
+    display: block;
+    resize: none;
+    font-size: 30px;
+    width: 70%;
+    font-weight: bold;
+}
+
+.theme_description {
+    outline: none;
+    border: none;
+    display: block;
+    resize: none;
+    width: 70%;
+    margin-bottom: 20px;
+}

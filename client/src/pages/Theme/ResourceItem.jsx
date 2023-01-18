@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import s from './Theme.module.css';
+import s from './ResourceItem.module.css';
 
 function ResourceItem(props) {
     const navigate = useNavigate();

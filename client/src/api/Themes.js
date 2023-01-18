@@ -36,5 +36,20 @@ export const themeAPI = createApi({
             }),
             invalidatesTags: res => ['Theme'],
         }),
+        deleteTheme: build.mutation({
+            query: (themeId) => ({
+                url: `/themes/${themeId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: res => ['Theme'],
+        }),
+        updateTheme: build.mutation({
+            query: ({ themeId, newTheme }) => ({
+                url: `/themes/${themeId}`,
+                method: 'PUT',
+                body: newTheme,
+            }),
+            invalidatesTags: res => ['Theme'],
+        }),
     })
 });

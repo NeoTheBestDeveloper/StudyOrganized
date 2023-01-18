@@ -12,12 +12,14 @@ function ThemeListItem(props) {
             }
         });
     }
+
+    console.log(props);
     return (
         <li className={s.theme_item}>
             <button className={s.theme_title} onClick={goToTheme}>{props.title}</button>
-            <button type="button" className={s.cross_button}>
+            <button type="button" className={s.cross_button} onClick={() => props.deleteTheme(props.id)}>
                 <img src="assets/cross.svg" alt="Крестик" />
-            </button>
+            </button >
         </li >
     );
 }

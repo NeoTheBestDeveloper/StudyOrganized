@@ -1,17 +1,10 @@
-.resource_title {
-    margin-bottom: 20px;
-}
-
-.short_description__text {
-    width: 70%;
-    margin-bottom: 20px;
-}
-
 .resources {
     margin: 20px 0;
 }
 
 .resources_title {
+    font-weight: bold;
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
@@ -19,65 +12,3 @@
     margin-bottom: 10px;
     list-style: none;
 }
-
-.full_description__title {
-    margin-bottom: 10px;
-}
-
-.full_description__text {
-    margin-bottom: 10px;
-}
-
-.resource_title {
-    text-decoration: underline;
-}
-
-.resource_item {
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-.resource_item::before {
-    content: "- ";
-}
-
-
-.cross_button {
-    border: none;
-}
-
-.cross_button img {
-    display: block;
-    width: 16px;
-    height: 16px;
-}
-
-.resource_add {
-    position: absolute;
-    border: 3px solid #5e81ac;
-    border-radius: 10px;
-    width: 50%;
-    background-color: #eceff4;
-    padding: 20px;
-    left: 25%;
-    top: 20%;
-}
-
-.resource_add__form {
-    display: flex;
-    flex-direction: column;
-}
-
-.title {
-    margin-bottom: 20px;
-}
-
-.short_description {
-    margin-bottom: 20px;
-}
-
-.full_description {
-    margin-bottom: 20px;
-}
-
-
