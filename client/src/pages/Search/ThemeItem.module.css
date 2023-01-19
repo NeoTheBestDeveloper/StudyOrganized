@@ -1,0 +1,31 @@
+.theme_author {
+    font-weight: bold;
+}
+.theme_item {
+    margin-bottom: 10px;
+    border: 3px solid #5e81ac;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.theme_item:hover {
+    cursor: pointer;
+}
+
+.theme_title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.theme_text {
+    margin-bottom: 5px;
+    height: 96px;
+    overflow: hidden;
+}
+
+.button_wrapper {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}

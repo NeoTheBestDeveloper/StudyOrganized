@@ -21,7 +21,7 @@ export const themeAPI = createApi({
             providesTags: res => ['Theme'],
         }),
         searchThemes: build.query({
-            query: (value, key = "all", offset = 0, limit = 10, order = "asc") => (
+            query: (value, key = "all", offset = 0, limit = 100, order = "desc") => (
                 `/themes?value=${value}&key=${key}&limit=${limit}&offset=${offset}&order=${order}`
             ),
             providesTags: res => ['Theme'],

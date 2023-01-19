@@ -13,8 +13,7 @@ function Resource() {
     return (
         <main className={s.resource}>
             <Navbar />
-            {!isLoading && <ResourceContent title={data.title} description={data.description}
-                id={data.id} theme_id={data.theme_id} theme={location.state.currentTheme} />}
+            {!isLoading && <ResourceContent resource={data} theme={location.state.currentTheme} />}
         </main>
     );
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { themeAPI } from '../../api/Themes';
 
-import s from './Search.module.css'
+import s from './ThemeItem.module.css'
 
 const ThemeItem = (props) => {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const ThemeItem = (props) => {
             <div className={s.theme_title}>{props.theme.title}</div>
             <div className={s.theme_text}>{props.theme.description}</div>
             <div className={s.theme_item__bottom}>
-                <div className={s.theme_author}>{props.theme.user.name}</div>
+                <div className={s.theme_author}>Автор - {props.theme.user.name}</div>
                 {!props.hasPermissions &&
                     <div className={s.button_wrapper}>
                         <button className={s.save_button} onClick={saveTheme} name="save_button">Сохранить</button>
