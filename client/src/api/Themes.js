@@ -21,7 +21,9 @@ export const themeAPI = createApi({
             providesTags: res => ['Theme'],
         }),
         searchThemes: build.query({
-            query: (title, offset = 0, limit = 10) => `/themes?title=${title}&limit=${limit}&offset=${offset}`,
+            query: (value, key = "all", offset = 0, limit = 10, order = "asc") => (
+                `/themes?value=${value}&key=${key}&limit=${limit}&offset=${offset}&order=${order}`
+            ),
             providesTags: res => ['Theme'],
         }),
         fetchSavedUserThemes: build.query({
@@ -48,6 +50,13 @@ export const themeAPI = createApi({
                 url: `/themes/${themeId}`,
                 method: 'PUT',
                 body: newTheme,
+            }),
+            invalidatesTags: res => ['Theme'],
+        }),
+        saveTheme: build.mutation({
+            query: (themeId) => ({
+                url: `/users/me/save/themes/${themeId}`,
+                method: 'POST',
             }),
             invalidatesTags: res => ['Theme'],
         }),

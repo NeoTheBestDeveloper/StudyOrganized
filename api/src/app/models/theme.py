@@ -1,5 +1,6 @@
 from sqlalchemy import TIMESTAMP, Column, ForeignKey, \
         String, Integer, Text
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from ...database import Base
@@ -17,3 +18,7 @@ class Theme(Base):
     user_id = Column(Integer,
                      ForeignKey('users.id', ondelete='cascade'),
                      nullable=False)
+    user = relationship("User", lazy='selectin')
+
+    def __str__(self) -> str:
+        return f'Theme(id={self.id}, title={self.title}, description={self.description}, user_id={self.user_id})'

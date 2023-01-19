@@ -8,15 +8,15 @@ function ThemeListItem(props) {
     const goToTheme = () => {
         navigate('/theme', {
             state: {
-                themeId: props.id
+                themeId: props.theme.id
             }
         });
     }
 
     return (
         <li className={s.theme_item}>
-            <button className={s.theme_title} onClick={goToTheme}>{props.title}</button>
-            <button type="button" className={s.cross_button} onClick={() => props.deleteTheme(props.id)}>
+            <button className={s.theme_title} onClick={goToTheme}>{props.theme.title}</button>
+            <button type="button" className={s.cross_button} onClick={() => props.deleteTheme(props.theme.id)}>
                 <img src="assets/cross.svg" alt="Крестик" />
             </button >
         </li >

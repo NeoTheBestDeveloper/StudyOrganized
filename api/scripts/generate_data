@@ -1,0 +1,58 @@
+#!/bin/sh
+
+TOKEN=
+DEFAULT_USER="Default user"
+DEFAULT_MAIL="default@mail.com"
+DEFAULT_PASSWORD="Default password"
+DEFAULT_HOST="http://localhost"
+
+###### Register ######
+curl \
+-H "Content-Type: application/json" \
+-X POST \
+-d "{\"email\": \"$DEFAULT_MAIL\",\"password\": \"$DEFAULT_PASSWORD\",\"name\": \"$DEFAULT_USER\"}" \
+"$DEFAULT_HOST/api/auth/register"
+
+
+###### Login #####
+TOKEN="$(curl \
+-H "Content-Type: multipart/form-data" \
+-X POST \
+-F "username=$DEFAULT_MAIL" \
+-F "password=$DEFAULT_PASSWORD" \
+"$DEFAULT_HOST/api/auth/token/login")"
+
+TOKEN=$(echo $TOKEN | cut -d':' -f2 | cut -d',' -f1 | sed s/\"//g)
+
+##### functions #####
+function create_theme() { # $1 - title, $2 - description, ret new theme id
+    res=$(curl \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $TOKEN" \
+        -X POST \
+        -d "{\"title\": \"$1\",\"description\":\"$2\"}" \
+        "$DEFAULT_HOST/api/themes")
+    new_theme_id=$(echo $res | cut -d',' -f1 | cut -d':' -f2)
+    echo $new_theme_id
+}
+
+function create_resource() { # $1 - title, $2 - description, $3 - theme_id
+    res=$(curl \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $TOKEN" \
+        -X POST \
+        -d "{\"title\": \"$1\",\"description\": \"$2\",\"theme_id\":$3}" \
+        "$DEFAULT_HOST/api/resources")
+}
+
+for i in $(seq 1 14); do 
+    title=$(head -n 1 "./scripts/assets/theme$i.txt");
+    text=$(sed '1d' "./scripts/assets/theme$i.txt");
+    theme_id=$(create_theme "$title" "$text");
+    echo $title
+    create_resource "Первый ресурс" "Описание первого ресурса" $theme_id
+    create_resource "Второй ресурс" "Описание второго ресурса" $theme_id
+    create_resource "Третий ресурс" "Описание третьего ресурса" $theme_id
+    create_resource "Четвертый ресурс" "Описание четвертого ресурса" $theme_id
+    create_resource "Пятый ресурс" "Описание пятого ресурса" $theme_id
+done

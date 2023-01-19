@@ -1,4 +1,6 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useLayoutEffect, useRef } from "react";
+
 import { resourceApi } from "../../api/Resources";
 
 import s from './ResourceContent.module.css';
@@ -15,23 +17,27 @@ const ResourceContent = (props) => {
 
     const [updateResourceAPI] = resourceApi.useUpdateResourceMutation();
 
+    const navigate = useNavigate();
 
     useLayoutEffect(() => {
         titleRef.current.style.height = "inherit";
         descriptionRef.current.style.height = "inherit";
 
+        titleRef.current.rows = 1;
         titleRef.current.style.height = `${Math.max(
             titleRef.current.scrollHeight,
             MIN_TEXTAREA_HEIGHT
-        )}px`;
+        )
+            }px`;
         descriptionRef.current.style.height = `${Math.max(
             descriptionRef.current.scrollHeight,
             MIN_TEXTAREA_HEIGHT
-        )}px`;
+        )
+            } px`;
     });
 
     const updateResource = async () => {
-        const { data, error } = await updateResourceAPI({
+        const { isLoading } = await updateResourceAPI({
             resourceId: props.id,
             newResource: {
                 title,
@@ -40,6 +46,13 @@ const ResourceContent = (props) => {
                 id: props.id,
             },
         });
+        if (!isLoading) {
+            setIsEdited(false)
+        }
+    }
+
+    const goToTheme = () => {
+        navigate('/theme', { state: { themeId: props.theme.id } })
     }
 
     return (
@@ -48,6 +61,10 @@ const ResourceContent = (props) => {
                 setTitle(e.target.value);
                 if (!isEdited) setIsEdited(true);
             }} ref={titleRef} />
+            <div className={s.theme_title}>
+                <span>Тема - </span>
+                <button type="button" className={s.goToTheme_btn} onClick={goToTheme}>{props.theme.title}</button>
+            </div>
             <textarea className={s.resource_description} value={description} onChange={(e) => {
                 setDescription(e.target.value);
                 if (!isEdited) setIsEdited(true);

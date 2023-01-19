@@ -13,6 +13,7 @@ function Profile() {
     const logoutUser = async () => {
         await logout();
         dispatch(authSlice.actions.logoutUser());
+        window.location.reload();
     }
 
     return (

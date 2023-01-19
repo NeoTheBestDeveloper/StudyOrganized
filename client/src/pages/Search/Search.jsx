@@ -5,10 +5,12 @@ import { themeAPI } from '../../api/Themes';
 import Navbar from '../../components/Navbar/Navbar';
 import ThemeItem from './ThemeItem';
 import s from './Search.module.css';
+import { useSelector } from 'react-redux';
 
 function Search() {
     const [trigger, result] = themeAPI.useLazySearchThemesQuery();
     const [searchValue, setSearchValue] = useState('');
+    const { user } = useSelector(state => state.auth);
 
     const getFilteredThemes = async () => {
         await trigger(searchValue);
@@ -27,7 +29,9 @@ function Search() {
                 <div className={s.search_bottom}>
                     {result.currentData &&
                         <ul className={s.search_results}>
-                            {result.data.map((item) => <ThemeItem key={item.id} theme={item} />)}
+                            {result.data.map((item) =>
+                                <ThemeItem key={item.id} theme={item} hasPermissions={user.id === item.user.id} />
+                            )}
                         </ul>
                     }
                 </div>

@@ -16,3 +16,8 @@
     width: 70%;
     margin-bottom: 20px;
 }
+
+.goToTheme_btn {
+    text-decoration: underline;
+    border: none;
+}
