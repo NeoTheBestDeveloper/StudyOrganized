@@ -37,7 +37,7 @@ function Register() {
                     <input value={password} placeholder='Пароль' id="Password" type="password" className={s.form_input}
                         onChange={e => setPassword(e.target.value)} required />
                     <div className={s.form_bottom}>
-                        <button type='submit' className={s.form_bottom__btn}>Зарегестрироваться</button>
+                        <button type='submit' className={s.form_bottom__btn}>Зарегистрироваться</button>
                         <Link to='/login' className={s.form_bottom__link}>Уже есть аккаунт? Войти</Link>
                     </div>
                 </form>

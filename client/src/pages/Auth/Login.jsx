@@ -37,7 +37,7 @@ function Login() {
                         className={s.form_input} onChange={e => setPassword(e.target.value)} required />
                     <div className={s.form_bottom}>
                         <button type='submit' className={s.auth_btn}>Войти</button>
-                        <Link to='/register' className={s.form_bottom__link}>Нет аккаунта? Зарегестрироваться</Link>
+                        <Link to='/register' className={s.form_bottom__link}>Нет аккаунта? Зарегистрироваться</Link>
                     </div>
                 </form>
             </main>
