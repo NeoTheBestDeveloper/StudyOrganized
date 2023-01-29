@@ -1,28 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Link } from 'react-router-dom'
-import { authAPI } from '../../api/Auth';
-import authSlice from '../../store/Auth/AuthSlice';
 
+import { login } from '../../store/Auth/ActionCreators';
+import { showMessages } from '../../store/Error/ErrorSlice';
 
 import s from './Auth.module.css';
 
 function Login() {
-    const isAuth = useSelector(state => state.auth.isAuth);
     const dispatch = useDispatch();
-    const [login] = authAPI.useLoginMutation();
+
+    const { isAuth, errors } = useSelector(state => state.authReducer);
+
+    useEffect(() => {
+        if (errors.length !== 0) {
+            dispatch(showMessages(errors));
+        }
+    }, [errors]);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const submit = async (e) => {
         e.preventDefault();
-        const { data, error } = await login({ email, password });
-        if (data) {
-            dispatch(authSlice.actions.authSuccess());
-        } else {
-            console.log(error);
-        }
+        dispatch(login(email, password));
     }
 
 

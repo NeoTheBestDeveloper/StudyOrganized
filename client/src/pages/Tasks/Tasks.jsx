@@ -5,7 +5,6 @@ function Tasks() {
 
     return (
         <div className="tasks">
-            <Navbar />
             <h1>Tasks</h1>
         </div>
     );

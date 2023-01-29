@@ -1,15 +1,15 @@
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { authAPI } from '../../api/Auth';
 
 
 const PrivateRoute = ({ children }) => {
-    const { isLoading, error } = authAPI.useGetMeQuery();
+    const { isLoading, isAuth } = useSelector(state => state.authReducer);
 
     if (isLoading) {
         return;
     }
 
-    return error ? <Navigate to='/login' /> : children;
+    return isAuth ? children : <Navigate to='/login' />;
 }
 
 export default PrivateRoute;

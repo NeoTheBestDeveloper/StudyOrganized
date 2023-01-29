@@ -1,65 +1,30 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { getClient, setToken, deleteToken } from './Config';
 
-import { baseURL } from './Config';
-
-
-export const getToken = () => {
-    return localStorage.getItem('token');
+export const isAuthAPI = async () => {
+    return await getClient().get('/users/me/isauth');
 }
 
-const setToken = (token) => {
-    localStorage.setItem('token', token);
+export const loginAPI = async (email, password) => {
+    const formData = new FormData();
+    formData.set('username', email);
+    formData.set('password', password);
+
+    const response = await getClient().post('/auth/token/login', formData);
+
+    setToken(response.data.access_token);
+    return response;
 }
 
+export const registerAPI = async (name, email, password) => {
+    return await getClient().post('/auth/register', { name, email, password });
+}
 
-export const authAPI = createApi({
-    reducerPath: 'authAPI',
-    baseQuery: fetchBaseQuery({
-        baseUrl: baseURL,
-        prepareHeaders: (headers, { getState }) => {
-            headers.set('Authorization', `Bearer ${getToken()}`)
-            return headers
-        },
-    }),
-    tagTypes: ['User'],
-    endpoints: (build) => ({
-        login: build.mutation({
-            query: ({ email, password }) => {
-                const formData = new FormData();
-                formData.set('username', email);
-                formData.set('password', password);
+export const logoutAPI = async () => {
+    const result = await getClient().post('/auth/token/logout');
+    deleteToken();
+    return result;
+}
 
-                return {
-                    url: `/auth/token/login`,
-                    method: 'POST',
-                    body: formData,
-                };
-            },
-            transformResponse: (response, meta, arg) => {
-                setToken(response.access_token);
-                return response;
-            },
-            invalidatesTags: res => ['User'],
-        }),
-        register: build.mutation({
-            query: (user) => ({
-                url: '/auth/register',
-                method: 'POST',
-                body: user,
-            }),
-            invalidatesTags: res => ['User'],
-        }),
-        logout: build.mutation({
-            query: () => ({
-                url: '/auth/token/logout',
-                method: 'POST',
-            }),
-            invalidatesTags: res => ['User'],
-        }),
-        getMe: build.query({
-            query: () => '/users/me',
-            providesTags: res => ['User'],
-        }),
-    })
-});
-
+export const fetchMeAPI = async () => {
+    return await getClient().get('/users/me');
+}

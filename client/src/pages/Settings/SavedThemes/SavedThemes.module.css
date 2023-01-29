@@ -1,0 +1,28 @@
+.saved_themes {
+    margin-bottom: 20px;
+}
+
+.saved_themes__title {
+    margin-bottom: 10px;
+}
+
+.saved_themes__list {
+    margin-bottom: 20px;
+}
+
+
+.new_theme__form {
+    border: none;
+    outline: none;
+}
+
+
+.new_theme__form[value] {
+    margin-right: 10px;
+    text-decoration: underline;
+    font-size: 30px;
+}
+
+.new_theme__before {
+    font-size: 30px;
+}

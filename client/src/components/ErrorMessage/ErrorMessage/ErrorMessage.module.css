@@ -1,0 +1,49 @@
+.error_message {
+    color: #bf616a;
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid #bf616a;
+    display: none;
+    margin-bottom: 5px;
+    display: block;
+    width: 100%;
+}
+
+
+@keyframes show_msg {
+    0% {
+        transform: translateX(100%);
+    }
+    40% {
+        transform: translateX(-10%);
+    }
+    80% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-10px);
+    }
+}
+
+@keyframes hide_msg {
+    0% {
+        transform: translateX(-10px);
+    }
+    40% {
+        transform: translateX(0%);
+    }
+    80% {
+        transform: translateX(-10%);
+    }
+    100% {
+        transform: translateX(110%);
+    }
+}
+
+.error_message.show {
+    animation: show_msg 1s ease forwards;
+}
+
+.error_message.hide {
+    animation: hide_msg 1s ease forwards;
+}

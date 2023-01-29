@@ -1,23 +1,23 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { themeAPI } from '../api/Themes';
-import { resourceApi } from '../api/Resources';
-import { authAPI } from '../api/Auth';
-import authSlice from './Auth/AuthSlice';
+
+import authReducer from './Auth/AuthSlice';
+import userReducer from './Auth/UserSlice';
+import errorReducer from './Error/ErrorSlice';
+import savedThemesSlice from './Settings/SavedThemesSlice';
+import themeSlice from './Theme/ThemeSlice';
+import searchSlice from './Search/searchSlice';
+import resourcesSlice from './Theme/ResourcesSlice';
 
 const rootReducer = combineReducers({
-    [authSlice.name]: authSlice.reducer,
-    [themeAPI.reducerPath]: themeAPI.reducer,
-    [resourceApi.reducerPath]: resourceApi.reducer,
-    [authAPI.reducerPath]: authAPI.reducer,
+    [resourcesSlice.name]: resourcesSlice.reducer,
+    [searchSlice.name]: searchSlice.reducer,
+    [themeSlice.name]: themeSlice.reducer,
+    [savedThemesSlice.name]: savedThemesSlice.reducer,
+    errorReducer,
+    userReducer,
+    authReducer,
 });
-
-
 
 export default configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware()
-            .concat(themeAPI.middleware)
-            .concat(resourceApi.middleware)
-            .concat(authAPI.middleware),
 });

@@ -1,7 +1,9 @@
 .theme_author {
     font-weight: bold;
 }
+
 .theme_item {
+    display: block;
     margin-bottom: 10px;
     border: 3px solid #5e81ac;
     border-radius: 10px;

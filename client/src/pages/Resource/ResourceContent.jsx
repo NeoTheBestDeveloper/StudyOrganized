@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useLayoutEffect, useRef } from "react";
 
-import { resourceApi } from "../../api/Resources";
+/* import { resourceApi } from "../../api/Resources"; */
 
 import s from './ResourceContent.module.css';
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ const ResourceContent = (props) => {
     const [description, setDescription] = useState(props.resource.description);
     const [isEdited, setIsEdited] = useState(false);
 
-    const [updateResourceAPI] = resourceApi.useUpdateResourceMutation();
+    /* const [updateResourceAPI] = resourceApi.useUpdateResourceMutation(); */
     const { user } = useSelector(state => state.auth);
 
     const navigate = useNavigate();
@@ -30,21 +30,21 @@ const ResourceContent = (props) => {
         descriptionRef.current.style.height = `${Math.max(descriptionRef.current.scrollHeight, MIN_TEXTAREA_HEIGHT)}px`;
     });
 
-    const updateResource = async () => {
-        const { isLoading } = await updateResourceAPI({
-            resourceId: props.resource.id,
-            newResource: {
-                title,
-                description,
-                theme_id: props.theme.id,
-                id: props.resource.id,
-            },
-        });
-
-        if (!isLoading) {
-            setIsEdited(false)
-        }
-    }
+    /* const updateResource = async () => { */
+    /*     const { isLoading } = await updateResourceAPI({ */
+    /*         resourceId: props.resource.id, */
+    /*         newResource: { */
+    /*             title, */
+    /*             description, */
+    /*             theme_id: props.theme.id, */
+    /*             id: props.resource.id, */
+    /*         }, */
+    /*     }); */
+    /**/
+    /*     if (!isLoading) { */
+    /*         setIsEdited(false) */
+    /*     } */
+    /* } */
 
     const goToTheme = () => {
         navigate('/theme', { state: { themeId: props.theme.id } })
@@ -72,7 +72,7 @@ const ResourceContent = (props) => {
                     if (!isEdited) setIsEdited(true);
                 }
             }} ref={descriptionRef} disabled={!hasPermission()} />
-            {(isEdited && hasPermission()) && <button className={s.save_resource__btn} onClick={updateResource}>Сохранить изменения</button>}
+            {/* {(isEdited && hasPermission()) && <button className={s.save_resource__btn} onClick={updateResource}>Сохранить изменения</button>} */}
         </div>
 
     );
