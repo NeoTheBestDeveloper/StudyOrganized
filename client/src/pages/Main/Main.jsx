@@ -1,4 +1,3 @@
-import Navbar from '../../components/Navbar/Navbar';
 
 import s from './Main.module.css';
 

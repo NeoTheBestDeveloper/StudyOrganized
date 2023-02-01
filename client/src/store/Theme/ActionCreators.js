@@ -1,4 +1,4 @@
-import { client } from "../../api/Config";
+import { getClient } from "../../api/Config";
 import resourcesSlice from "./ResourcesSlice";
 
 import themeSlice from "./ThemeSlice";
@@ -21,7 +21,7 @@ export const fetchTheme = (id, savedThemes, searchedThemes) => async (dispatch) 
             return;
         }
 
-        const response = await client.get(`/themes/${id}`);
+        const response = await getClient.get(`/themes/${id}`);
         dispatch(themeSlice.actions.fetchingThemeSuccess(response.data));
     } catch (e) {
         dispatch(themeSlice.actions.fetchingThemeError(e.message));
@@ -31,7 +31,7 @@ export const fetchTheme = (id, savedThemes, searchedThemes) => async (dispatch) 
 export const updateTheme = (id, title, description) => async (dispatch) => {
     try {
         dispatch(themeSlice.actions.updatingTheme());
-        await client.put(`/themes/${id}`, { title, description });
+        await getClient.put(`/themes/${id}`, { title, description });
         dispatch(themeSlice.actions.updatingThemeSuccess());
     } catch (e) {
         dispatch(themeSlice.actions.updatingThemeError(e.message));
@@ -41,7 +41,7 @@ export const updateTheme = (id, title, description) => async (dispatch) => {
 export const createResource = (theme_id, title) => async (dispatch) => {
     try {
         dispatch(resourcesSlice.actions.creatingResource());
-        await client.post(`/resources`, { title, theme_id });
+        await getClient.post(`/resources`, { title, theme_id });
         dispatch(resourcesSlice.actions.creatingResourceSuccess());
     } catch (e) {
         dispatch(resourcesSlice.actions.creatingResourceError(e.message));
@@ -51,7 +51,7 @@ export const createResource = (theme_id, title) => async (dispatch) => {
 export const deleteResource = (id) => async (dispatch) => {
     try {
         dispatch(resourcesSlice.actions.deletingResource())
-        await client.delete(`/resources/${id}`);
+        await getClient.delete(`/resources/${id}`);
         dispatch(resourcesSlice.actions.deletingResourceSuccess());
     } catch (e) {
         dispatch(resourcesSlice.actions.deletingResourceError(e.message));

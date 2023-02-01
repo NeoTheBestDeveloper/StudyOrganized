@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 
-import Navbar from '../../components/Navbar/Navbar';
 import ResourceContent from './ResourceContent';
 
 import s from './Resource.module.css';

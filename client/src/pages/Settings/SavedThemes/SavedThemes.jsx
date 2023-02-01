@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import errorSlice, { showMessages } from "../../../store/Error/ErrorSlice";
+import { showMessages } from "../../../store/Error/ErrorSlice";
 
 import { createTheme, deleteTheme, fetchSavedThemes } from "../../../store/Settings/ActionCreators";
 
@@ -11,7 +11,7 @@ const SavedThemes = () => {
     const dispatch = useDispatch();
     const effectRan = useRef(false);
 
-    const { savedThemes, isDeleting, isUpdating, isFetching, error } = useSelector(state => state.savedThemes);
+    const { savedThemes, isDeleting, isUpdating, isFetching, error } = useSelector(state => state.savedThemesReducer);
     const [title, setTitle] = useState('');
     const [isFormShown, setIsFormShown] = useState(false);
 
@@ -21,7 +21,7 @@ const SavedThemes = () => {
         }
 
         if (error) {
-            dispatch(errorSlice.actions.showMessages(error));
+            dispatch(showMessages(error));
         }
 
         return () => {
