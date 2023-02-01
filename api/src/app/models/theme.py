@@ -19,6 +19,4 @@ class Theme(Base):
                      ForeignKey('users.id', ondelete='cascade'),
                      nullable=False)
     user = relationship("User", lazy='selectin')
-
-    def __str__(self) -> str:
-        return f'Theme(id={self.id}, title={self.title}, description={self.description}, user_id={self.user_id})'
+    resources = relationship("Resource", lazy='selectin')

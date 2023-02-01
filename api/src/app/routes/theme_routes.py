@@ -1,19 +1,12 @@
-from enum import Enum
-
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from ...auth import UserReadSchema
-from ..schemas import CreateUpdateThemeSchema, ReadThemeSchema
-from ..services import OrderAscending, ThemeService, get_theme_service, \
-        ThemesFilterBy
+from ..schemas import CreateThemeSchema, ReadThemeSchema, UpdateThemeSchema
+from ..services import ThemeService, get_theme_service
+
+from .query_params_types import ThemesType, ThemesFilterBy, OrderAscending
 
 themes_router = APIRouter(tags=['Themes'])
-
-
-class ThemesType(Enum):
-    SAVED = 'saved'
-    SHOWN = 'shown'
 
 
 @themes_router.get("/themes", response_model=list[ReadThemeSchema])
@@ -40,7 +33,7 @@ async def get_user_themes(
 
 @themes_router.post("/themes", response_model=ReadThemeSchema)
 async def create_theme(
-        new_theme: CreateUpdateThemeSchema,
+        new_theme: CreateThemeSchema,
         theme_service: ThemeService = Depends(get_theme_service),
 ):
     return await theme_service.create_theme(new_theme)
@@ -58,14 +51,14 @@ async def delete_theme(
     theme_id: int,
     theme_service: ThemeService = Depends(get_theme_service),
 ) -> JSONResponse:
-    await theme_service.delete_theme_by_id(theme_id)
+    await theme_service.delete_theme(theme_id)
     return JSONResponse({"status": "ok"})
 
 
 @themes_router.put("/themes/{theme_id}")
 async def update_theme(
     theme_id: int,
-    new_theme: CreateUpdateThemeSchema,
+    new_theme: UpdateThemeSchema,
     theme_service: ThemeService = Depends(get_theme_service)
 ) -> JSONResponse:
     await theme_service.update_theme(theme_id, new_theme)

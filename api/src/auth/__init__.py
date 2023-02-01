@@ -1,5 +1,5 @@
 from .routes import router, current_user
-from .models import User
+from .models import User, AccessToken
 from .schemas import UserReadSchema
 
 __all__ = (
@@ -7,4 +7,5 @@ __all__ = (
     'current_user',
     'User',
     'UserReadSchema',
+    'AccessToken',
 )

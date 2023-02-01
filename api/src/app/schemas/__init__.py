@@ -1,8 +1,12 @@
-from .resource import ResourceSchema
-from .theme import ReadThemeSchema, CreateUpdateThemeSchema
+from .resource import ReadResourceSchema, UpdateResourceSchema, \
+    CreateResourceSchema
+from .theme import ReadThemeSchema, CreateThemeSchema, UpdateThemeSchema
 
 __all__ = (
-    'ResourceSchema',
+    'ReadResourceSchema',
     'ReadThemeSchema',
-    'CreateUpdateThemeSchema',
+    'CreateThemeSchema',
+    'UpdateThemeSchema',
+    'CreateResourceSchema',
+    'UpdateResourceSchema',
 )

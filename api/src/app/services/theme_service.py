@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import NoReturn
 
 from fastapi import Depends
@@ -7,24 +6,14 @@ from sqlalchemy.sql import func, select, insert, delete, update, desc
 
 from ...auth import User, current_user
 from ..models import Resource, Theme
-from ..schemas import CreateUpdateThemeSchema
+from ..schemas import CreateThemeSchema, UpdateThemeSchema
 from ...database import get_async_session
-
-
-class OrderAscending(str, Enum):
-    ASC = 'asc'
-    DESC = 'desc'
-
-
-class ThemesFilterBy(str, Enum):
-    ALL = 'all'
-    TITLE = 'title'
-    DESCRIPTION = 'description'
+from ..routes.query_params_types import ThemesFilterBy, OrderAscending
 
 
 class ThemeService:
     user: User
-    model: Theme
+    model: type[Theme]
     session: AsyncSession
 
     def __init__(self, session: AsyncSession, user: User) -> None:
@@ -39,35 +28,41 @@ class ThemeService:
 
     async def create_theme(
         self,
-        new_theme: CreateUpdateThemeSchema,
+        new_theme: CreateThemeSchema,
     ) -> Theme | NoReturn:
         values = {'user_id': self.user.id, **new_theme.dict()}
         stmt = insert(self.model).values(values).returning(self.model)
         result = await self.session.execute(stmt)
         await self.session.commit()
-        new_theme_id = result.scalars().first()
 
+        new_theme_id = result.scalars().first()
         stmt = select(self.model).where(self.model.id == new_theme_id)
         result = await self.session.execute(stmt)
 
         return result.scalars().first()
 
-    async def delete_theme_by_id(self, theme_id: int) -> None | NoReturn:
+    async def delete_theme(self, theme_id: int) -> None | NoReturn:
         stmt = delete(self.model).where(self.model.id == theme_id)
+
         await self.session.execute(stmt)
         await self.session.commit()
 
-    async def update_theme(
-            self, theme_id: int,
-            new_theme: CreateUpdateThemeSchema) -> None | NoReturn:
+        return None
+
+    async def update_theme(self, theme_id: int,
+                           new_theme: UpdateThemeSchema) -> None | NoReturn:
         stmt = update(self.model).values(
             new_theme.dict()).where(self.model.id == theme_id)
+
         await self.session.execute(stmt)
         await self.session.commit()
+
+        return None
 
     async def get_saved_themes(self) -> list[Theme] | NoReturn:
         stmt = select(self.model).where(self.model.user_id == self.user.id)
         results = await self.session.execute(stmt)
+
         return results.scalars().all()
 
     def _get_filter_by_title_stmt(self, substr: str):
@@ -93,15 +88,16 @@ class ThemeService:
         else:
             stmt = self._get_filter_by_all_stmt(substr)
 
-        if order == OrderAscending.ASC:
-            stmt = stmt.where(self.model.description != '').limit(
-                limit).offset(offset).order_by(self.model.created_at)
-        else:
-            stmt = stmt.where(self.model.description != '').limit(
-                limit).offset(offset).order_by(desc(self.model.created_at))
+        # FIXME: Ordering by time don;t work, don't find themes with ordering.
+        # if order == OrderAscending.ASC:
+        #     stmt = stmt.where(self.model.description != '').limit(
+        #         limit).offset(offset).order_by(self.model.created_at)
+        # else:
+        #     stmt = stmt.where(self.model.description != '').limit(
+        #         limit).offset(offset).order_by(desc(self.model.created_at))
 
         result = await self.session.execute(stmt)
-        themes = result.scalars().all()
+        themes: list[Theme] = result.scalars().all()
         return themes
 
     async def save_theme(self, theme_id: int) -> None | NoReturn:
@@ -133,6 +129,7 @@ class ThemeService:
             stmt = insert(Resource).values(processed_resources)
             await self.session.execute(stmt)
         await self.session.commit()
+        return None
 
 
 def get_theme_service(session: AsyncSession = Depends(get_async_session),

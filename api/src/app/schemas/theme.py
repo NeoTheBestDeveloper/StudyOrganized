@@ -3,13 +3,15 @@ from datetime import datetime
 from pydantic import BaseModel, Field, PositiveInt
 
 from ...auth import UserReadSchema
+from . import ReadResourceSchema
 
 
 class ReadThemeSchema(BaseModel):
+    negri: str
     id: PositiveInt
-    user_id: PositiveInt
     user: UserReadSchema
-    title: str
+    resources: list[ReadResourceSchema]
+    title: str = Field(max_length=255)
     description: str | None = None
     created_at: datetime
 
@@ -17,6 +19,10 @@ class ReadThemeSchema(BaseModel):
         orm_mode = True
 
 
-class CreateUpdateThemeSchema(BaseModel):
+class CreateThemeSchema(BaseModel):
     title: str = Field(max_length=255)
-    description: str | None = None
+
+
+class UpdateThemeSchema(BaseModel):
+    title: str = Field(max_length=255)
+    description: str | None

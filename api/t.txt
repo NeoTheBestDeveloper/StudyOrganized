@@ -1,0 +1,1 @@
+{"id":1,"email":"default@mail.com","is_active":true,"is_superuser":false,"is_verified":false,"name":"Default user","registered_at":"2023-01-24T15:27:45.844601+00:00","avatar_url":null,"settings":{}}"Internal server error"
