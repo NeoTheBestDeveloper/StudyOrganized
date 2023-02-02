@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchTheme } from '../../store/Theme/ActionCreators';
 
@@ -10,13 +10,13 @@ import Resources from './Resources/Resources';
 import s from './Theme.module.css';
 
 function Theme() {
+    const dispatch = useDispatch();
     const effectRan = useRef(false);
     const { id } = useParams();
-    const dispatch = useDispatch();
 
-    const { user } = useSelector(state => state.auth);
-    const { isFetching, theme, error } = useSelector(state => state.theme);
-    const { savedThemes } = useSelector(state => state.savedThemes);
+    const { user } = useSelector(state => state.userReducer);
+    const { isLoading, theme, errors } = useSelector(state => state.themeReducer);
+    const { savedThemes } = useSelector(state => state.savedThemesReducer);
 
     useEffect(() => {
         if (!effectRan.current) {
@@ -34,9 +34,9 @@ function Theme() {
 
     return (
         <main className={s.theme}>
-            {!isFetching && <>
+            {!isLoading && <>
                 <ThemeContent hasPermissions={hasPermissions()} />
-                <Resources hasPermissions={hasPermissions()} />
+                {/* <Resources hasPermissions={hasPermissions()} /> */}
             </>
             }
         </main >

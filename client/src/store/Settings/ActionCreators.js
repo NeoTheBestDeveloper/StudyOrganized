@@ -4,7 +4,7 @@ import {
     savedThemesFetching, savedThemesFetchingError, savedThemesFetchingSuccess,
 } from "./SavedThemesSlice"
 
-import { getClient } from '../../api/Config';
+import { createThemeAPI, deleteThemeAPI, fetchSavedThemesAPI } from "../../api/Theme";
 
 const handleError = (dispatch, e, actionCreator) => {
     const detail = e.response.data.detail ? e.response.data.detail : 'Некорректный ответ от сервера.';
@@ -14,7 +14,7 @@ const handleError = (dispatch, e, actionCreator) => {
 export const fetchSavedThemes = () => async (dispatch) => {
     try {
         dispatch(savedThemesFetching());
-        const response = await getClient.get('/users/me/themes?type=saved');
+        const response = await fetchSavedThemesAPI();
         dispatch(savedThemesFetchingSuccess(response.data));
     } catch (e) {
         handleError(dispatch, e, savedThemesFetchingError);
@@ -24,7 +24,7 @@ export const fetchSavedThemes = () => async (dispatch) => {
 export const createTheme = (title) => async (dispatch) => {
     try {
         dispatch(savedThemesCreating());
-        const response = await getClient.post('/themes', { title });
+        const response = await createThemeAPI(title);
         dispatch(savedThemesCreatingSuccess(response.data));
     } catch (e) {
         handleError(dispatch, e, savedThemesCreatingError);
@@ -34,7 +34,7 @@ export const createTheme = (title) => async (dispatch) => {
 export const deleteTheme = (id) => async (dispatch) => {
     try {
         dispatch(savedThemesDeleting());
-        await getClient.delete(`/themes/${id}`);
+        await deleteThemeAPI(id);
         dispatch(savedThemesDeletingSuccess(id));
     } catch (e) {
         handleError(dispatch, e, savedThemesDeletingError);

@@ -7,7 +7,6 @@ from . import ReadResourceSchema
 
 
 class ReadThemeSchema(BaseModel):
-    negri: str
     id: PositiveInt
     user: UserReadSchema
     resources: list[ReadResourceSchema]

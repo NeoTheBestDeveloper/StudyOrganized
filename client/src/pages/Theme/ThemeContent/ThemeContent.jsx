@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { updateTheme } from '../../../store/Theme/ActionCreators';
 
 import themeSlice from '../../../store/Theme/ThemeSlice';
@@ -26,7 +27,7 @@ const autoHeightAreas = (titleRef, descriptionRef) => {
 const ThemeContent = ({ hasPermissions }) => {
     const dispatch = useDispatch();
 
-    const { theme, isLoading, error } = useSelector(state => state.theme);
+    const { theme, isLoading, errors } = useSelector(state => state.themeReducer);
 
     const titleRef = useRef(null);
     const descriptionRef = useRef(null);
@@ -45,13 +46,6 @@ const ThemeContent = ({ hasPermissions }) => {
         dispatch(updateTheme(theme.id, title, description));
         if (!isLoading) {
             setIsEdited(false);
-        }
-
-        if (error) {
-            console.log(error);
-        } else {
-            dispatch(themeSlice.actions.setThemeTitle(title));
-            dispatch(themeSlice.actions.setThemeDescription(description));
         }
     }
 
@@ -77,7 +71,7 @@ const ThemeContent = ({ hasPermissions }) => {
         <div className={s.theme_content}>
             <textarea className={s.theme_title} value={title}
                 onChange={e => updateTitleValue(e)} ref={titleRef} disabled={!hasPermissions} />
-            <textarea className={s.theme_description} value={description}
+            <textarea className={s.theme_description} value={description === null ? "" : description}
                 onChange={e => updateDescriptionValue(e)} ref={descriptionRef} disabled={!hasPermissions} />
             {(isEdited && hasPermissions) &&
                 <button className={s.udpdate_theme__btn} onClick={updateThemeWrapper}>

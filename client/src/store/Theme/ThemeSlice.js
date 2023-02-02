@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { themeErrorsToStrs } from './ErrorsToStrs';
 
 const themeSlice = createSlice({
     name: 'theme',
     initialState: {
-        error: '',
-        isFetching: false,
-        isUpdating: false,
-        isDeleting: false,
-        isCreating: false,
+        errors: [],
+        isLoading: false,
         theme: {
             resources: [],
             user: {},
@@ -15,34 +13,36 @@ const themeSlice = createSlice({
     },
     reducers: {
         fetchingTheme(state) {
-            state.isFetching = true;
+            state.isLoading = true;
         },
         fetchingThemeSuccess(state, action) {
-            state.isFetching = false;
+            state.isLoading = false;
             state.theme = action.payload;
-            state.error = '';
+            state.errors = [];
         },
         fetchingThemeError(state, action) {
-            state.isFetching = false;
-            state.error = action.payload;
-        },
-
-        setTheme(state, action) {
-            state.theme = action.payload;
+            state.isLoading = false;
+            state.errors = themeErrorsToStrs(action.payload);
         },
 
         updatingTheme(state) {
-            state.isUpdating = true;
+            state.isLoading = true;
         },
-        updatingThemeSuccess(state) {
-            state.isUpdating = false;
-            state.error = '';
+        updatingThemeSuccess(state, action) {
+            state.isLoading = false;
+            state.errors = [];
+            state.theme.title = action.payload.title;
+            state.theme.description = action.payload.description;
         },
         updatingThemeError(state, action) {
-            state.isUpdating = false;
-            state.error = action.payload;
+            state.isLoading = false;
+            state.errors = themeErrorsToStrs(action.payload);
         },
     },
 });
 
-export default themeSlice;
+export const {
+    fetchingTheme, fetchingThemeError, fetchingThemeSuccess,
+    updatingTheme, updatingThemeError, updatingThemeSuccess,
+} = themeSlice.actions;
+export default themeSlice.reducer;

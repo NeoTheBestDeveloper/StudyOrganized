@@ -11,7 +11,8 @@ const SavedThemes = () => {
     const dispatch = useDispatch();
     const effectRan = useRef(false);
 
-    const { savedThemes, isDeleting, isUpdating, isFetching, error } = useSelector(state => state.savedThemesReducer);
+    const { savedThemes, isLoading, errors } = useSelector(state => state.savedThemesReducer);
+
     const [title, setTitle] = useState('');
     const [isFormShown, setIsFormShown] = useState(false);
 
@@ -20,19 +21,19 @@ const SavedThemes = () => {
             dispatch(fetchSavedThemes());
         }
 
-        if (error) {
-            dispatch(showMessages(error));
+        if (errors) {
+            dispatch(showMessages(errors));
         }
 
         return () => {
             effectRan.current = true;
         }
-    }, [isFetching]);
+    }, [isLoading]);
 
-    const deleteThemeWrapper = async (themeId) => {
+    const deleteThemeWrapper = (themeId) => {
         dispatch(deleteTheme(themeId));
-        if (!isDeleting && error) {
-            dispatch(showMessages(error));
+        if (!isLoading && errors) {
+            dispatch(showMessages(errors));
         }
     }
 
@@ -47,9 +48,11 @@ const SavedThemes = () => {
     return (
         <div className={s.saved_themes}>
             <h1 className={s.saved_themes__title}>Сохраненные темы</h1>
-            {!isFetching &&
+            {!isLoading &&
                 <ul className={s.saved_themes__list}>
-                    {savedThemes.map((item) => (<ThemeItem deleteTheme={deleteThemeWrapper} key={item.id} theme={item} />))}
+                    {savedThemes.map((item) =>
+                        (<ThemeItem deleteTheme={deleteThemeWrapper} key={item.id} theme={item} />))
+                    }
                     {isFormShown &&
                         <div className={s.new_theme}>
                             <span className={s.new_theme__before}>-</span>
