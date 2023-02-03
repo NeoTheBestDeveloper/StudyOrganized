@@ -5,7 +5,8 @@ const themeSlice = createSlice({
     name: 'theme',
     initialState: {
         errors: [],
-        isLoading: false,
+        isFetching: false,
+        isEditing: false,
         theme: {
             resources: [],
             user: {},
@@ -13,29 +14,29 @@ const themeSlice = createSlice({
     },
     reducers: {
         fetchingTheme(state) {
-            state.isLoading = true;
+            state.isFetching = true;
         },
         fetchingThemeSuccess(state, action) {
-            state.isLoading = false;
+            state.isFetching = false;
             state.theme = action.payload;
             state.errors = [];
         },
         fetchingThemeError(state, action) {
-            state.isLoading = false;
+            state.isFetching = false;
             state.errors = themeErrorsToStrs(action.payload);
         },
 
         updatingTheme(state) {
-            state.isLoading = true;
+            state.isEditing = true;
         },
         updatingThemeSuccess(state, action) {
-            state.isLoading = false;
+            state.isEditing = false;
             state.errors = [];
             state.theme.title = action.payload.title;
             state.theme.description = action.payload.description;
         },
         updatingThemeError(state, action) {
-            state.isLoading = false;
+            state.isEditing = false;
             state.errors = themeErrorsToStrs(action.payload);
         },
     },

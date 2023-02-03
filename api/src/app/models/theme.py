@@ -19,4 +19,3 @@ class Theme(Base):
                      ForeignKey('users.id', ondelete='cascade'),
                      nullable=False)
     user = relationship("User", lazy='selectin')
-    resources = relationship("Resource", lazy='selectin')

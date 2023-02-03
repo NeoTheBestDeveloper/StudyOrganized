@@ -1,0 +1,22 @@
+.resources_list {
+    list-style: none;
+}
+
+.new_resource__form {
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+
+.new_resource__form[value] {
+    font-family: serif;
+    text-decoration: underline;
+    font-size: 30px;
+}
+
+.new_resource__before {
+    box-sizing: content-box;
+    display: inline;
+    font-size: 30px;
+}

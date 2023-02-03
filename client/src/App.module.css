@@ -30,6 +30,11 @@ button {
 
 button:hover {
     cursor: pointer;
+    background-color: #e5e9f0;
+}
+
+button:active {
+    background-color: #d8dee9;
 }
 
 input {

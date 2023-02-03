@@ -6,49 +6,56 @@ const savedThemesSlice = createSlice({
     name: 'savedThemes',
     initialState: {
         savedThemes: [],
-        isLoading: false,
+        isFetching: false,
+        isEditing: false,
+        isNewThemeFormShown: false,
         errors: [],
     },
     reducers: {
         savedThemesFetching(state) {
-            state.isLoading = true;
+            state.isFetching = true;
         },
         savedThemesFetchingSuccess(state, action) {
-            state.isLoading = false;
+            state.isFetching = false;
             state.errors = [];
             state.savedThemes = action.payload;
         },
         savedThemesFetchingError(state, action) {
-            state.isLoading = false;
+            state.isFetching = false;
             state.errors = settingsErrorsToStrs(action.payload);
         },
 
         savedThemesCreating(state) {
-            state.isLoading = true;
+            state.isEditing = true;
         },
         savedThemesCreatingSuccess(state, action) {
-            state.isLoading = false;
-            state.errors = [];
+            state.isNewThemeFormShown = false;
             state.savedThemes.push(action.payload);
+            state.isEditing = false;
+            state.errors = [];
         },
         savedThemesCreatingError(state, action) {
-            state.isLoading = false;
+            state.isNewThemeFormShown = false;
+            state.isEditing = false;
             state.errors = settingsErrorsToStrs(action.payload);
         },
 
         savedThemesDeleting(state) {
-            state.isLoading = true;
+            state.isEditing = true;
         },
         savedThemesDeletingSuccess(state, action) {
-            state.isLoading = false;
+            state.isEditing = false;
             state.errors = [];
             state.savedThemes = state.savedThemes.filter(item => item.id !== action.payload);
         },
         savedThemesDeletingError(state, action) {
-            state.isLoading = false;
+            state.isEditing = false;
             state.errors = settingsErrorsToStrs(action.payload);
         },
 
+        showNewThemeForm(state) {
+            state.isNewThemeFormShown = true;
+        },
     },
 });
 
@@ -57,4 +64,5 @@ export const {
     savedThemesFetching, savedThemesFetchingError, savedThemesFetchingSuccess,
     savedThemesCreating, savedThemesCreatingError, savedThemesCreatingSuccess,
     savedThemesDeleting, savedThemesDeletingError, savedThemesDeletingSuccess,
+    showNewThemeForm,
 } = savedThemesSlice.actions;

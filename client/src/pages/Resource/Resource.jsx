@@ -1,16 +1,41 @@
-import { useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import ResourceContent from './ResourceContent';
+import { showMessages } from '../../store/Error/ErrorSlice';
+import { fetchResource } from '../../store/Resource/ActionCreators';
+
+import ResourceContent from './ResourceContent/ResourceContent';
 
 import s from './Resource.module.css';
 
-function Resource() {
-    const location = useLocation();
-    /* const { data, isLoading, error } = resourceApi.useFetchResourceQuery(location.state.resourceId); */
+const Resource = () => {
+    const effectRan = useRef(false);
+    const dispatch = useDispatch();
+
+    const { id } = useParams();
+    const { resource, themeTitle, errors, isEditing, isFetching } = useSelector(state => state.resourceReducer);
+    const { user } = useSelector(state => state.userReducer);
+
+    const hasPermission = user.id === resource.user_id;
+
+    useEffect(() => {
+        if (!effectRan.current) {
+            dispatch(fetchResource(id));
+        }
+
+        if (errors.length) {
+            dispatch(showMessages(errors));
+        }
+
+        return () => {
+            effectRan.current = true;
+        }
+    }, [isEditing, isFetching])
 
     return (
         <main className={s.resource}>
-            {/* {!isLoading && <ResourceContent resource={data} theme={location.state.currentTheme} />} */}
+            {!isFetching && <ResourceContent resource={resource} hasPermission={hasPermission} themeTitle={themeTitle} isEditing={isEditing} />}
         </main>
     );
 }

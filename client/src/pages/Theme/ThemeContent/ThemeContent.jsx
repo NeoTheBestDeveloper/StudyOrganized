@@ -27,7 +27,7 @@ const autoHeightAreas = (titleRef, descriptionRef) => {
 const ThemeContent = ({ hasPermissions }) => {
     const dispatch = useDispatch();
 
-    const { theme, isLoading, errors } = useSelector(state => state.themeReducer);
+    const { theme, isEditing, errors } = useSelector(state => state.themeReducer);
 
     const titleRef = useRef(null);
     const descriptionRef = useRef(null);
@@ -44,7 +44,7 @@ const ThemeContent = ({ hasPermissions }) => {
 
     const updateThemeWrapper = async () => {
         dispatch(updateTheme(theme.id, title, description));
-        if (!isLoading) {
+        if (!isEditing) {
             setIsEdited(false);
         }
     }

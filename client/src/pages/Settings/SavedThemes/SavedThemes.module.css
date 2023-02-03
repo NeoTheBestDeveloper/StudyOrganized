@@ -1,3 +1,7 @@
+.hide {
+    display: none;
+}
+
 .saved_themes {
     margin-bottom: 20px;
 }
@@ -12,17 +16,20 @@
 
 
 .new_theme__form {
+    padding: 0;
     border: none;
     outline: none;
 }
 
 
 .new_theme__form[value] {
-    margin-right: 10px;
+    font-family: serif;
     text-decoration: underline;
     font-size: 30px;
 }
 
 .new_theme__before {
+    box-sizing: content-box;
+    display: inline;
     font-size: 30px;
 }

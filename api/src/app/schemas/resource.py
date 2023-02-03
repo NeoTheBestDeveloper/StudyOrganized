@@ -13,10 +13,10 @@ class ReadResourceSchema(BaseModel):
 
 
 class UpdateResourceSchema(BaseModel):
-    title: str = Field(max_length=255)
+    title: str = Field(min_length=1, max_length=255)
     description: str | None = None
 
 
 class CreateResourceSchema(BaseModel):
-    title: str = Field(max_length=255)
+    title: str = Field(min_length=1, max_length=255)
     theme_id: PositiveInt

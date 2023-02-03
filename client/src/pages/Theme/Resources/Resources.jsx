@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createResource, deleteResource } from '../../../store/Theme/ActionCreators';
+import { useParams } from 'react-router-dom';
+
+import { showMessages } from '../../../store/Error/ErrorSlice';
+import { createResource, deleteResource, fetchThemeResources } from '../../../store/Theme/ActionCreators';
+import { showNewResourceForm } from '../../../store/Theme/ResourcesSlice';
 
 import ResourceItem from './ResourceItem/ResourceItem';
 
@@ -8,42 +12,67 @@ import s from './Resources.module.css';
 
 const Resources = ({ hasPermissions }) => {
     const dispatch = useDispatch();
-    const { theme } = useSelector(state => state.theme);
+    const effectRan = useRef(false);
 
-    const [isFormShown, setIsFormShown] = useState(false);
+    const themeId = useParams().id;
+
+    const { resources, isFetching, isEditing, errors, isNewResourceFormShown } = useSelector(state => state.resourcesReducer);
+
     const [title, setTitle] = useState('');
+    const [isEdited, setIsEdited] = useState(false);
 
-    const deleteResourceWrapper = (id) => {
-        dispatch(deleteResource(id));
-    }
+    useEffect(() => {
+        if (!effectRan.current) {
+            dispatch(fetchThemeResources(themeId));
+        }
+
+        if (errors.length) {
+            dispatch(showMessages(errors));
+        }
+
+        if (isEdited && !isEditing) {
+            setTitle('');
+            setIsEdited(false);
+        }
+
+        return () => {
+            effectRan.current = true;
+        }
+    }, [isFetching, isEditing]);
+
 
     const createResourceWrapper = (e) => {
         if (e.keyCode === 13) {
-            dispatch(createResource(theme.id, title));
-            setIsFormShown(false);
-            setTitle('');
+            dispatch(createResource(themeId, title));
         }
+    }
+
+    const deleteResourceWrapper = (id) => {
+        dispatch(deleteResource(id));
     }
 
     return (
         < div className={s.resources}>
             <h2 className={s.resources_title}>Ресурсы</h2>
             <ul className={s.resources_list}>
-                {theme.resources.map(
-                    (item) => <ResourceItem title={item.title} id={item.id} key={item.id}
-                        deleteResource={deleteResourceWrapper} theme={theme} hasPermissions={hasPermissions} />
+                {resources.map(
+                    (item) => <ResourceItem key={item.id} deleteResource={deleteResourceWrapper} hasPermissions={hasPermissions} resource={item} />
                 )}
-                {isFormShown &&
-                    <div className={s.new_theme}>
-                        <span className={s.new_theme__before}>-</span>
-                        <input autoFocus className={s.new_theme__form} onKeyDown={e => createResourceWrapper(e)}
+                {isNewResourceFormShown &&
+                    <div className={s.new_resource}>
+                        <span className={s.new_resource__before}>- </span>
+                        <input autoFocus className={s.new_resource__form} onKeyDown={e => createResourceWrapper(e)}
                             onChange={e => setTitle(e.target.value)} value={title} />
                     </div>
                 }
             </ul>
 
             {hasPermissions &&
-                <button className={s.resources_add__btn} onClick={() => setIsFormShown(!isFormShown)}>
+                <button className={s.resources_add__btn} onClick={() => {
+                    dispatch(showNewResourceForm());
+                    setIsEdited(true);
+                }
+                }>
                     Добавить
                 </button>
             }

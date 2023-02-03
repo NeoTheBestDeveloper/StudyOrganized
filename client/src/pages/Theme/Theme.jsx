@@ -8,6 +8,7 @@ import ThemeContent from './ThemeContent/ThemeContent';
 import Resources from './Resources/Resources';
 
 import s from './Theme.module.css';
+import { showMessages } from '../../store/Error/ErrorSlice';
 
 function Theme() {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function Theme() {
     const { id } = useParams();
 
     const { user } = useSelector(state => state.userReducer);
-    const { isLoading, theme, errors } = useSelector(state => state.themeReducer);
+    const { isFetching, isEditing, theme, errors } = useSelector(state => state.themeReducer);
     const { savedThemes } = useSelector(state => state.savedThemesReducer);
 
     useEffect(() => {
@@ -23,10 +24,14 @@ function Theme() {
             dispatch(fetchTheme(id, savedThemes, []));
         }
 
+        if (errors.length) {
+            dispatch(showMessages(errors));
+        }
+
         return () => {
             effectRan.current = true;
         }
-    }, []);
+    }, [isFetching, isEditing]);
 
     const hasPermissions = () => {
         return (user.id === theme.user.id);
@@ -34,9 +39,9 @@ function Theme() {
 
     return (
         <main className={s.theme}>
-            {!isLoading && <>
+            {!isFetching && <>
                 <ThemeContent hasPermissions={hasPermissions()} />
-                {/* <Resources hasPermissions={hasPermissions()} /> */}
+                <Resources hasPermissions={hasPermissions()} />
             </>
             }
         </main >

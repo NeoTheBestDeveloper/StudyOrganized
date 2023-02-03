@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 
-import { checkIsAuth, fetchMe } from './store/Auth/ActionCreators';
 import { showMessages } from './store/Error/ErrorSlice';
+import { checkIsAuth, fetchMe } from './store/Auth/ActionCreators';
 
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
@@ -21,9 +21,9 @@ import ErrorMessages from './components/ErrorMessage/ErrorMessages';
 import s from './App.module.css'
 
 function App() {
+    const dispatch = useDispatch();
     const authChecked = useRef(false);
     const userFetched = useRef(false);
-    const dispatch = useDispatch();
 
     const authState = useSelector(state => state.authReducer);
     const userState = useSelector(state => state.userReducer);
@@ -61,9 +61,9 @@ function App() {
                 <Routes>
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/register" element={<Register />} />
-                    <Route exact path="/" element={<PrivateRoute> <Main /></PrivateRoute>} />
+                    <Route exact path="/" element={<PrivateRoute><Main /></PrivateRoute>} />
                     <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                    <Route path="/resource/:id" element={<PrivateRoute><Resource /></PrivateRoute>} />
+                    <Route path="/resources/:id" element={<PrivateRoute><Resource /></PrivateRoute>} />
                     <Route path="/search" element={<PrivateRoute><Search /></PrivateRoute>} />
                     <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
                     <Route path="/tasks" element={<PrivateRoute><Tasks /></PrivateRoute>} />

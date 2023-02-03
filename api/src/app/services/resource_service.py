@@ -52,7 +52,9 @@ class ResourceService:
             new_data: UpdateResourceSchema) -> None | NoReturn:
         stmt = update(self.model).values(
             new_data.dict()).where(self.model.id == resource_id)
+
         await self.session.execute(stmt)
+        await self.session.commit()
 
         return None
 

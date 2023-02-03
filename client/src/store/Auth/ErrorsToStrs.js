@@ -12,7 +12,7 @@ const validationErrorToStr = (error) => {
     }
 }
 
-const badRequestErroroToStr = (error) => {
+const badRequestErrorToStr = (error) => {
     if (error === 'REGISTER_USER_ALREADY_EXISTS') {
         return 'Данный пользователь уже зарегистрированный.';
     } else if (error === 'LOGIN_BAD_CREDENTIALS') {
@@ -28,7 +28,7 @@ export const authErrorsToStrs = ({ detail, status }) => {
     if (status === 422) {
         return errors.map(error => validationErrorToStr(error));
     } else if (status === 400) {
-        return errors.map(error => badRequestErroroToStr(error));
+        return errors.map(error => badRequestErrorToStr(error));
     } else {
         return ['Что то пошло не так.'];
     }
