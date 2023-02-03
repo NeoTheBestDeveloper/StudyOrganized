@@ -1,10 +1,10 @@
-import { useState, useLayoutEffect, useRef } from "react";
-
-
-import s from './ResourceContent.module.css';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useState, useLayoutEffect, useRef } from "react";
+
 import { updateResource } from "../../../store/Resource/ActionCreators";
+
+import s from './ResourceContent.module.css';
 
 const MIN_TEXTAREA_HEIGHT = 16;
 
