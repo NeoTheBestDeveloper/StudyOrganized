@@ -7,10 +7,10 @@ import savedThemesReducer from './Settings/SavedThemesSlice';
 import themeReducer from './Theme/ThemeSlice';
 import resourcesReducer from './Theme/ResourcesSlice';
 import resourceReducer from './Resource/ResourceSlice';
-import searchSlice from './Search/searchSlice';
+import searchReducer from './Search/SearchSlice';
 
 const rootReducer = combineReducers({
-    /* [searchSlice.name]: searchSlice.reducer, */
+    searchReducer,
     resourceReducer,
     themeReducer,
     savedThemesReducer,

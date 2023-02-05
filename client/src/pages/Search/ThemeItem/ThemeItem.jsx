@@ -1,8 +1,18 @@
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { saveTheme } from '../../../store/Search/ActionCreators';
 
 import s from './ThemeItem.module.css'
 
 const ThemeItem = ({ hasPermissions, theme }) => {
+    const dispatch = useDispatch();
+
+    const saveThemeWrapper = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        dispatch(saveTheme(theme.id));
+    };
+
     return (
         <Link className={s.theme_item} to={`/themes/${theme.id}`} >
             <div className={s.theme_title}>{theme.title}</div>
@@ -11,7 +21,10 @@ const ThemeItem = ({ hasPermissions, theme }) => {
                 <div className={s.theme_author}>Автор - {theme.user.name}</div>
                 {!hasPermissions &&
                     <div className={s.button_wrapper}>
-                        <button className={s.save_button} name="save_button">Сохранить</button>
+                        <button className={s.save_button} name="save_button"
+                            onClick={saveThemeWrapper}>
+                            Сохранить
+                        </button>
                     </div>
                 }
             </div>

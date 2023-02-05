@@ -1,5 +1,10 @@
+.resources_title {
+    margin-bottom: 10px;
+}
+
 .resources_list {
     list-style: none;
+    margin-bottom: 20px;
 }
 
 .new_resource__form {

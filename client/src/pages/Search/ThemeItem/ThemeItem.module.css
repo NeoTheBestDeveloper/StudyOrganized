@@ -8,6 +8,7 @@
     border: 3px solid #5e81ac;
     border-radius: 10px;
     padding: 10px;
+    text-decoration: none;
 }
 
 .theme_item:hover {

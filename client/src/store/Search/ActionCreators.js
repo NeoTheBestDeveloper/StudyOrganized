@@ -1,13 +1,25 @@
-import { getClient } from "../../api/Config";
-
-import searchSlice from "./searchSlice";
+import { saveThemeAPI, searchThemesAPI } from "../../api/Theme";
+import {
+    savingTheme, savingThemeError, savingThemeSuccess,
+    searchingThemes, searchingThemesError, searchingThemesSuccess
+} from "./SearchSlice";
 
 export const searchThemes = (value, key = 'all', order = 'desc', offset = 0, limit = 100) => async (dispatch) => {
     try {
-        dispatch(searchSlice.actions.searchingThemes());
-        const response = await getClient.get(`/themes?value=${value}&key=${key}&order=${order}&offset=${offset}&limit=${limit}&`);
-        dispatch(searchSlice.actions.searchingThemesSuccess(response.data));
+        dispatch(searchingThemes());
+        const response = await searchThemesAPI(value, key, order, offset, limit);
+        dispatch(searchingThemesSuccess(response.data));
     } catch (e) {
-        dispatch(searchSlice.actions.searchingThemesError(e.message));
+        dispatch(searchingThemesError(e.message));
+    }
+}
+
+export const saveTheme = (themeId) => async (dispatch) => {
+    try {
+        dispatch(savingTheme());
+        await saveThemeAPI(themeId);
+        dispatch(savingThemeSuccess());
+    } catch (e) {
+        dispatch(savingThemeError(e.message));
     }
 }

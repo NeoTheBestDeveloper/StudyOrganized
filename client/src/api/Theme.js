@@ -19,3 +19,11 @@ export const updateThemeAPI = async (id, title, description) => {
 export const deleteThemeAPI = async (id) => {
     await getClient().delete(`/themes/${id}`);
 }
+
+export const searchThemesAPI = async (value, key = 'all', order = 'desc', offset = 0, limit = 100) => {
+    return await getClient().get(`/themes?value=${value}&key=${key}&order=${order}&offset=${offset}&limit=${limit}&`);
+}
+
+export const saveThemeAPI = async (themeId) => {
+    return await getClient().post(`/users/me/save/themes/${themeId}`);
+}

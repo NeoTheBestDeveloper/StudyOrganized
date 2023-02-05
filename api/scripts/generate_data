@@ -41,24 +41,17 @@ function create_resource() { # $1 - title, $2 - description, $3 - theme_id
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer $TOKEN" \
         -X POST \
-        -d "{\"title\": \"$1\",\"description\": \"$2\",\"theme_id\":$3}" \
+        -d "{\"title\": \"$1\",\"theme_id\":$3}" \
         "$DEFAULT_HOST/api/resources")
 }
 
-# for i in $(seq 1 20); do 
-#     sleep 0,1
-#     title=$(head -n 1 "./scripts/assets/theme11.txt");
-#     text=$(sed '1d' "./scripts/assets/theme11.txt");
-#     theme_id=$(create_theme "$title" "$text");
-#     create_resource "Первый ресурс" "Описание первого ресурса" $theme_id
-#     create_resource "Второй ресурс" "Описание второго ресурса" $theme_id
-#     create_resource "Третий ресурс" "Описание третьего ресурса" $theme_id
-#     create_resource "Четвертый ресурс" "Описание четвертого ресурса" $theme_id
-#     create_resource "Пятый ресурс" "Описание пятого ресурса" $theme_id
-# done
-
-curl \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer TOKEN" \
-        -X GET \
-        "$DEFAULT_HOST/api/users/me/isauth"
+for i in $(seq 1 2); do 
+    title=$(head -n 1 "./scripts/assets/theme$i.txt");
+    text=$(sed '1d' "./scripts/assets/theme$i.txt");
+    theme_id=$(create_theme "$title" "$text");
+    create_resource "Первый ресурс" "Описание первого ресурса" $theme_id
+    create_resource "Второй ресурс" "Описание второго ресурса" $theme_id
+    create_resource "Третий ресурс" "Описание третьего ресурса" $theme_id
+    create_resource "Четвертый ресурс" "Описание четвертого ресурса" $theme_id
+    create_resource "Пятый ресурс" "Описание пятого ресурса" $theme_id
+done

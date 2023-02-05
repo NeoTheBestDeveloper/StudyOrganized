@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateTheme } from '../../../store/Theme/ActionCreators';
 
-import themeSlice from '../../../store/Theme/ThemeSlice';
-
 import s from './ThemeContent.module.css';
 
 const MIN_TEXTAREA_HEIGHT = 16;

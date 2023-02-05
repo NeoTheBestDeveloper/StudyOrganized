@@ -23,10 +23,23 @@ export const searchSlice = createSlice({
             state.errors = searchErrorsToStrs(action.payload);
         },
 
+        savingTheme(state) {
+            state.isFetching = true;
+        },
+        savingThemeSuccess(state, action) {
+            state.isFetching = false;
+            state.errors = [];
+        },
+        savingThemeError(state, action) {
+            state.isFetching = false;
+            state.errors = searchErrorsToStrs(action.payload);
+        },
+
     },
 });
 
 export const {
-    searchingThemes, searchingThemesSuccess, searchingThemesError
+    searchingThemes, searchingThemesSuccess, searchingThemesError,
+    savingTheme, savingThemeSuccess, savingThemeError,
 } = searchSlice.actions;
 export default searchSlice.reducer;
