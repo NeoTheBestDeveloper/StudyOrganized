@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { showMessages } from '../../store/Error/ErrorSlice';
-import { fetchResource } from '../../store/Resource/ActionCreators';
+import { showMessages } from '../../store/Error/Slices/ErrorSlice';
+import { fetchResource } from '../../store/Resource/AsyncActionCreators';
 
 import ResourceContent from './ResourceContent/ResourceContent';
 
@@ -31,7 +31,7 @@ const Resource = () => {
         return () => {
             effectRan.current = true;
         }
-    }, [isEditing, isFetching])
+    }, [isEditing, isFetching, dispatch, errors, id])
 
     return (
         <main className={s.resource}>

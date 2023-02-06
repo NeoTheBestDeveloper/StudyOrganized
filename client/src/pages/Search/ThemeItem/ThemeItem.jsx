@@ -1,6 +1,7 @@
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { saveTheme } from '../../../store/Search/ActionCreators';
+import { useDispatch } from 'react-redux';
+
+import { saveTheme } from '../../../store/Search/AsyncActionCreators';
 
 import s from './ThemeItem.module.css'
 

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { settingsErrorsToStrs } from './ErrorsToStrs';
+import { settingsErrorsToStrs } from './../ErrorsToStrs';
 
 const savedThemesSlice = createSlice({
     name: 'savedThemes',

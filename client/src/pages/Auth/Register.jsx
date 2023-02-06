@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 
-import { register } from '../../store/Auth/ActionCreators';
-import { showMessages } from '../../store/Error/ErrorSlice';
+import { register } from '../../store/Auth/AsyncActionCreators';
+import { showMessages } from '../../store/Error/Slices/ErrorSlice';
 
 import s from './Auth.module.css';
 
@@ -22,15 +22,15 @@ function Register() {
             navigate('/');
         }
 
-        if (errors.length) {
-            dispatch(showMessages(errors));
-        }
-
         if (!isLoading && isRegistered) {
             navigate('/login');
         }
 
-    }, [isRegistered, errors]);
+        if (errors.length) {
+            dispatch(showMessages(errors));
+        }
+
+    }, [isRegistered, errors, dispatch, navigate, isAuth, isLoading]);
 
     const submit = (e) => {
         e.preventDefault();

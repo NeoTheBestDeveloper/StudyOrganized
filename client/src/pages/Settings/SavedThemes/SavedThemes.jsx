@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showMessages } from "../../../store/Error/ErrorSlice";
 
-import { createTheme, deleteTheme, fetchSavedThemes } from "../../../store/Settings/ActionCreators";
-import { showNewThemeForm } from "../../../store/Settings/SavedThemesSlice";
+import { showMessages } from "../../../store/Error/Slices/ErrorSlice";
+import { showNewThemeForm } from "../../../store/Settings/Slices/SavedThemesSlice";
+import { createTheme, deleteTheme, fetchSavedThemes } from "../../../store/Settings/AsyncActionCreators";
 
 import ThemeItem from "../ThemeItem/ThemeItem";
 import s from './SavedThemes.module.css'
@@ -22,19 +22,20 @@ const SavedThemes = () => {
             dispatch(fetchSavedThemes());
         }
 
-        if (errors.length) {
-            dispatch(showMessages(errors));
-        }
 
         if (isEdited && !isEditing) {
             setTitle('');
             setIsEdited(false);
         }
 
+        if (errors.length) {
+            dispatch(showMessages(errors));
+        }
+
         return () => {
             effectRan.current = true;
         }
-    }, [isLoading, isEditing]);
+    }, [isLoading, isEditing, dispatch, isEdited, errors]);
 
     const deleteThemeWrapper = (themeId) => {
         dispatch(deleteTheme(themeId));

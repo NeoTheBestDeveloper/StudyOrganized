@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
 
-import { showMessages } from '../../../store/Error/ErrorSlice';
-import { createResource, deleteResource, fetchThemeResources } from '../../../store/Theme/ActionCreators';
-import { showNewResourceForm } from '../../../store/Theme/ResourcesSlice';
+import { showMessages } from '../../../store/Error/Slices/ErrorSlice';
+import { showNewResourceForm } from '../../../store/Theme/Slices/ResourcesSlice';
+import { createResource, deleteResource, fetchThemeResources } from '../../../store/Theme/AsyncActionCreators';
 
 import ResourceItem from './ResourceItem/ResourceItem';
 
@@ -38,7 +38,7 @@ const Resources = ({ hasPermissions }) => {
         return () => {
             effectRan.current = true;
         }
-    }, [isFetching, isEditing]);
+    }, [isFetching, isEditing, dispatch, errors, themeId, isEdited]);
 
 
     const createResourceWrapper = (e) => {

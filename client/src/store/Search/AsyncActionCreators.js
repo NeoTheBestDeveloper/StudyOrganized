@@ -1,8 +1,9 @@
 import { saveThemeAPI, searchThemesAPI } from "../../api/Theme";
+
 import {
     savingTheme, savingThemeError, savingThemeSuccess,
     searchingThemes, searchingThemesError, searchingThemesSuccess
-} from "./SearchSlice";
+} from "./Slices/SearchSlice";
 
 export const searchThemes = (value, key = 'all', order = 'desc', offset = 0, limit = 100) => async (dispatch) => {
     try {

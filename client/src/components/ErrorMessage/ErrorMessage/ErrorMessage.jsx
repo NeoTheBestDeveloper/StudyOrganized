@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { incrementShownMessages } from '../../../store/Error/ErrorSlice';
+import { incrementShownMessages } from '../../../store/Error/Slices/ErrorSlice';
 
 import s from './ErrorMessage.module.css';
 

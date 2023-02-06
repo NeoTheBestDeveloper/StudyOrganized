@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { showMessages } from '../../store/Error/ErrorSlice';
-import { searchThemes } from '../../store/Search/ActionCreators';
+import { showMessages } from '../../store/Error/Slices/ErrorSlice';
+import { searchThemes } from '../../store/Search/AsyncActionCreators';
 
 import ThemeItem from './ThemeItem/ThemeItem';
 

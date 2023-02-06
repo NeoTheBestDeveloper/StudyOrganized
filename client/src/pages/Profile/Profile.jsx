@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { logout } from '../../store/Auth/ActionCreators';
+import { logout } from '../../store/Auth/AsyncActionCreators';
 
 import s from './Profile.module.css';
 
@@ -22,7 +22,7 @@ function Profile() {
     }
 
     return (
-        <main className="profile">
+        <main className={s.profile}>
             <div className={s.profile_name}>Имя <span className={s.bold}>{user.name}</span></div>
             <div className={s.profile_email}>Почта <span className={s.bold}>{user.email}</span></div>
             <button className={s.logout_btn} type='button' onClick={logoutWrapper}>Выйти</button>

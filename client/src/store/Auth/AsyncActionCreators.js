@@ -3,13 +3,13 @@ import {
     fetchingAuthStatus, fetchingAuthStatusError, fetchingAuthStatusSuccess,
     setIsAuth,
     setIsRegistered,
-} from "./AuthSlice";
+} from "./Slices/AuthSlice";
 import {
     fetchingMe, fetchingMeError, fetchingMeSuccess,
     logingUser, logingUserError, logingUserSuccess,
     logoutingUser, logoutingUserError, logoutingUserSuccess,
     registeringUser, registeringUserError, registeringUserSuccess
-} from "./UserSlice";
+} from "./Slices/UserSlice";
 
 const handleError = (dispatch, e, actionCreator) => {
     const detail = e.response.data.detail ? e.response.data.detail : 'Некорректный ответ от сервера.';

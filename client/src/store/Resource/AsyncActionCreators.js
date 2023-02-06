@@ -1,9 +1,10 @@
 import { fetchResourceAPI, updateResourceAPI } from "../../api/Resources";
 import { fetchThemeAPI } from "../../api/Theme";
+
 import {
     fetchingResource, fetchingResourceError, fetchingResourceSuccess,
     updatingResource, updatingResourceError, updatingResourceSuccess
-} from "./ResourceSlice";
+} from "./Slices/ResourceSlice";
 
 
 export const fetchResource = (id) => async (dispatch) => {

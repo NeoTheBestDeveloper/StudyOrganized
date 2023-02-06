@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authErrorsToStrs } from "./ErrorsToStrs";
+
+import { authErrorsToStrs } from "./../ErrorsToStrs";
 
 export const authSlice = createSlice({
     name: 'auth',

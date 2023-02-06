@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { resourceErrorsToStrs } from './ErrorsToStrs';
+
+import { resourceErrorsToStrs } from './../ErrorsToStrs';
 
 const resourceSlice = createSlice({
     name: 'resource',

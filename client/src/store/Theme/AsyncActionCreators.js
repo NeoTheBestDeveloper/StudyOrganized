@@ -1,29 +1,19 @@
-import { createResourceAPI, deleteResourceAPI, fetchThemeResourcesAPI } from "../../api/Resources";
 import { fetchThemeAPI, updateThemeAPI } from "../../api/Theme";
+import { createResourceAPI, deleteResourceAPI, fetchThemeResourcesAPI } from "../../api/Resources";
 
-import { creatingResource, creatingResourceError, creatingResourceSuccess, deletingResource, deletingResourceError, deletingResourceSuccess, fetchingThemeResources, fetchingThemeResourcesError, fetchingThemeResourcesSuccess } from "./ResourcesSlice";
+import {
+    creatingResource, creatingResourceError, creatingResourceSuccess,
+    deletingResource, deletingResourceError, deletingResourceSuccess,
+    fetchingThemeResources, fetchingThemeResourcesError, fetchingThemeResourcesSuccess
+} from "./Slices/ResourcesSlice";
 import {
     fetchingTheme, fetchingThemeError, fetchingThemeSuccess,
     updatingTheme, updatingThemeError, updatingThemeSuccess,
-} from "./ThemeSlice";
+} from "./Slices/ThemeSlice";
 
-export const fetchTheme = (id, savedThemes, searchedThemes) => async (dispatch) => {
+export const fetchTheme = (id) => async (dispatch) => {
     try {
         dispatch(fetchingTheme());
-        let res = savedThemes.find(theme => theme.id === id);
-
-        if (res) {
-            dispatch(fetchingThemeSuccess(savedThemes[res]));
-            return;
-        }
-
-        res = searchedThemes.find(theme => theme.id === id);
-
-        if (res) {
-            dispatch(fetchingThemeSuccess(savedThemes[res]));
-            return;
-        }
-
         const response = await fetchThemeAPI(id);
         dispatch(fetchingThemeSuccess(response.data));
     } catch (e) {

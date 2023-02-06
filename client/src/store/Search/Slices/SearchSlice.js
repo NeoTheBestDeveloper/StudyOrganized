@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { searchErrorsToStrs } from './ErrorsToStrs';
+import { searchErrorsToStrs } from './../ErrorsToStrs';
 
 export const searchSlice = createSlice({
     name: 'search',

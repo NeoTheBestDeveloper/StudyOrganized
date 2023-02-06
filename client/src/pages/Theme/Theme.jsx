@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchTheme } from '../../store/Theme/ActionCreators';
+import { showMessages } from '../../store/Error/Slices/ErrorSlice';
+import { fetchTheme } from '../../store/Theme/AsyncActionCreators';
 
 import ThemeContent from './ThemeContent/ThemeContent';
 import Resources from './Resources/Resources';
 
 import s from './Theme.module.css';
-import { showMessages } from '../../store/Error/ErrorSlice';
 
 function Theme() {
     const dispatch = useDispatch();
@@ -17,11 +17,10 @@ function Theme() {
 
     const { user } = useSelector(state => state.userReducer);
     const { isFetching, isEditing, theme, errors } = useSelector(state => state.themeReducer);
-    const { savedThemes } = useSelector(state => state.savedThemesReducer);
 
     useEffect(() => {
         if (!effectRan.current) {
-            dispatch(fetchTheme(id, savedThemes, []));
+            dispatch(fetchTheme(id));
         }
 
         if (errors.length) {
@@ -31,7 +30,7 @@ function Theme() {
         return () => {
             effectRan.current = true;
         }
-    }, [isFetching, isEditing]);
+    }, [isFetching, isEditing, dispatch, id, errors]);
 
     const hasPermissions = () => {
         return (user.id === theme.user.id);

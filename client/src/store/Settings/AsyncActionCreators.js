@@ -1,10 +1,11 @@
+import { createThemeAPI, deleteThemeAPI, fetchSavedThemesAPI } from "../../api/Theme";
+
 import {
     savedThemesCreating, savedThemesCreatingError, savedThemesCreatingSuccess,
     savedThemesDeleting, savedThemesDeletingError, savedThemesDeletingSuccess,
     savedThemesFetching, savedThemesFetchingError, savedThemesFetchingSuccess,
-} from "./SavedThemesSlice"
+} from "./Slices/SavedThemesSlice"
 
-import { createThemeAPI, deleteThemeAPI, fetchSavedThemesAPI } from "../../api/Theme";
 
 const handleError = (dispatch, e, actionCreator) => {
     const detail = e.response.data.detail ? e.response.data.detail : 'Некорректный ответ от сервера.';

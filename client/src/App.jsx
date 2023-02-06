@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { showMessages } from './store/Error/ErrorSlice';
-import { checkIsAuth, fetchMe } from './store/Auth/ActionCreators';
+import { showMessages } from './store/Error/Slices/ErrorSlice';
+import { checkIsAuth, fetchMe } from './store/Auth/AsyncActionCreators';
 
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
@@ -50,7 +50,8 @@ function App() {
             authChecked.current = true;
         }
 
-    }, [authState.errors, userState.errors, authState.isAuth]);
+    }, [authState.errors, userState.errors, authState.isAuth,
+        dispatch, userState.isLoading, authState.isLoading]);
 
 
     return (

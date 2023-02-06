@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateTheme } from '../../../store/Theme/ActionCreators';
+import { updateTheme } from '../../../store/Theme/AsyncActionCreators';
 
 import s from './ThemeContent.module.css';
 
@@ -25,7 +25,7 @@ const autoHeightAreas = (titleRef, descriptionRef) => {
 const ThemeContent = ({ hasPermissions }) => {
     const dispatch = useDispatch();
 
-    const { theme, isEditing, errors } = useSelector(state => state.themeReducer);
+    const { theme, isEditing } = useSelector(state => state.themeReducer);
 
     const titleRef = useRef(null);
     const descriptionRef = useRef(null);

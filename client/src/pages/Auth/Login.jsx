@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Link } from 'react-router-dom'
 
-import { login } from '../../store/Auth/ActionCreators';
-import { showMessages } from '../../store/Error/ErrorSlice';
+import { login } from '../../store/Auth/AsyncActionCreators';
+import { showMessages } from '../../store/Error/Slices/ErrorSlice';
 
 import s from './Auth.module.css';
 
@@ -16,7 +16,7 @@ function Login() {
         if (errors.length !== 0) {
             dispatch(showMessages(errors));
         }
-    }, [errors]);
+    }, [errors, dispatch]);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

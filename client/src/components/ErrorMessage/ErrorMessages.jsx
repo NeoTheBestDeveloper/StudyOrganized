@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeMessage } from '../../store/Error/ErrorSlice';
+import { closeMessage } from '../../store/Error/Slices/ErrorSlice';
+
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 
 import s from './ErrorMessages.module.css';
@@ -16,7 +17,7 @@ const ErrorMessages = () => {
         if (shownCount > messages.length) {
             setTimeout(() => dispatch(closeMessage()), 1000);
         }
-    }, [shownCount]);
+    }, [shownCount, messages.length, dispatch]);
 
 
 

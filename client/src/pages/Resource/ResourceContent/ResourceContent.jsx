@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useLayoutEffect, useRef } from "react";
 
-import { updateResource } from "../../../store/Resource/ActionCreators";
+import { updateResource } from "../../../store/Resource/AsyncActionCreators";
 
 import s from './ResourceContent.module.css';
 
