@@ -44,6 +44,7 @@ const SavedThemes = () => {
     const createThemeWrapper = (e) => {
         if (e.keyCode === 13) {
             dispatch(createTheme(title));
+            setIsEdited(true);
         }
     }
 
@@ -67,7 +68,6 @@ const SavedThemes = () => {
             }
             <button className={s.add_theme__button} type="button" onClick={() => {
                 dispatch(showNewThemeForm());
-                setIsEdited(true);
             }
             }>
                 Добавить

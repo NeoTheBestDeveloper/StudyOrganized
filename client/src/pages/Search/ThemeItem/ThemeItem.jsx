@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -6,6 +7,7 @@ import { saveTheme } from '../../../store/Search/AsyncActionCreators';
 import s from './ThemeItem.module.css'
 
 const ThemeItem = ({ hasPermissions, theme }) => {
+    const text = useRef(null);
     const dispatch = useDispatch();
 
     const saveThemeWrapper = (e) => {

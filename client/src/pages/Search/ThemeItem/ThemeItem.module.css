@@ -23,8 +23,13 @@
 
 .theme_text {
     margin-bottom: 5px;
-    height: 96px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* number of lines to show */
+           line-clamp: 10; 
+    -webkit-box-orient: vertical;
+    word-break:break-all;
 }
 
 .button_wrapper {

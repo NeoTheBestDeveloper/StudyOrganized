@@ -44,6 +44,7 @@ const Resources = ({ hasPermissions }) => {
     const createResourceWrapper = (e) => {
         if (e.keyCode === 13) {
             dispatch(createResource(themeId, title));
+            setIsEdited(true);
         }
     }
 
@@ -70,7 +71,6 @@ const Resources = ({ hasPermissions }) => {
             {hasPermissions &&
                 <button className={s.resources_add__btn} onClick={() => {
                     dispatch(showNewResourceForm());
-                    setIsEdited(true);
                 }
                 }>
                     Добавить
