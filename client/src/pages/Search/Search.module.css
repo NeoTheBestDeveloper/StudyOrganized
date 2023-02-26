@@ -6,6 +6,7 @@
 .search_top {
     width: 100%;
     margin-bottom: 30px;
+    display: flex;
 }
 
 .search_input {
@@ -15,7 +16,6 @@
 }
 
 .search_btn {
-    width: 15%;
     font-size: 16px;
 }
 
@@ -24,3 +24,20 @@
     height: 100%;
 }
 
+.search_in__list {
+    list-style: none;
+    display: none;
+}
+
+.order_acsending__list {
+    list-style: none;
+    display: none;
+}
+
+.search_in__title:hover  .search_in__list{
+    display: block;
+}
+
+.order_acsending__title:hover  .order_acsending__list{
+    display: block;
+}

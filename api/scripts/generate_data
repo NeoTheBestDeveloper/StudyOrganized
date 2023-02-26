@@ -33,6 +33,12 @@ function create_theme() { # $1 - title, $2 - description, ret new theme id
         -d "{\"title\": \"$1\",\"description\":\"$2\"}" \
         "$DEFAULT_HOST/api/themes")
     new_theme_id=$(echo $res | cut -d',' -f1 | cut -d':' -f2)
+    res=$(curl \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $TOKEN" \
+        -X PUT \
+        -d "{\"title\": \"$1\",\"description\":\"$2\"}" \
+        "$DEFAULT_HOST/api/themes/$new_theme_id")
     echo $new_theme_id
 }
 

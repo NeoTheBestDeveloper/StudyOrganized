@@ -88,13 +88,12 @@ class ThemeService:
         else:
             stmt = self._get_filter_by_all_stmt(substr)
 
-        # FIXME: Ordering by time don;t work, don't find themes with ordering.
-        # if order == OrderAscending.ASC:
-        #     stmt = stmt.where(self.model.description != '').limit(
-        #         limit).offset(offset).order_by(self.model.created_at)
-        # else:
-        #     stmt = stmt.where(self.model.description != '').limit(
-        #         limit).offset(offset).order_by(desc(self.model.created_at))
+        if order == OrderAscending.ASC:
+            stmt = stmt.where(self.model.description != '').limit(
+                limit).offset(offset).order_by(self.model.created_at)
+        else:
+            stmt = stmt.where(self.model.description != '').limit(
+                limit).offset(offset).order_by(desc(self.model.created_at))
 
         result = await self.session.execute(stmt)
         themes: list[Theme] = result.scalars().all()
